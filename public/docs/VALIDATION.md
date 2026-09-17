@@ -81,3 +81,13 @@ A mocked AI response also verified multiple-choice selection, hidden feedback be
 - Paragraph condensation observed initially; changed to sentence-by-sentence inference. Exact title glossary and electrical-charge context help terminology but do not validate sentences. Original wording is now available alongside translated outputs; source evidence remains intact.
 - Packaged production worker loaded and visibly reported an intentionally interrupted weight download. Full production inference was not repeated; real inference test used development worker.
 - HLD/LLD diagrams include the browser-local path; each architecture PDF remains one landscape page. Provider/live tutoring and Vercel deployment remain separate unverified integrations.
+
+## Blank-page and reader correction
+
+- 16 Node tests passed, including blank/visual/unknown classification, sparse headings and original page-number preservation.
+- All 22 desktop/mobile browser cases passed in the final full run. Initially the two new page-coverage cases failed because the visible warning lacked an alert role; accessible alert semantics corrected that.
+- Actual generated PDF contains readable page 1, a white-filled blank page 2, short heading page 3 and visual-only page 4. Page 2 is skipped without OCR warning, page 3 retains citation p. 3 S2, page 4 is flagged; blank page can be inspected.
+- Fit-page default, reset between mind map/roadmap, no inner vertical canvas scrolling, responsive width and detailed source-linked reading sections passed.
+- Production build and English fixture retrieval evaluation passed. This does not verify the user PDF, OCR, diagrams or Tamil answer correctness.
+
+Normal-size topic-reader screenshot visually reviewed; definitions, formulas, self-checks and block-level page references are readable.

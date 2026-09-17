@@ -123,3 +123,9 @@ The bilingual original demo is manually authored. Source preview preserves langu
 No provider API key is required. English source aids → Tamil using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
 
 Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (structured provenance-safe traversal and bounded segments), `src/workers/translation.worker.js` (download, WASM translation, sequential queue and in-memory translation cache). Cache strings are cleared on document replacement/removal; model files may remain in browser cache. Model pinned to Xenova/nllb-200-distilled-600M at revision 261c31d1a5732c67cdd16d80e8d6088507c7ccea, CC-BY-NC-4.0, based on Meta NLLB-200.
+
+## Blank-page notices and reading outputs
+
+Refresh and upload the PDF again after updating this version; existing in-memory documents keep their earlier parsing report. Read Document reading summary: blank pages are skipped automatically, short text is included, and visible no-text content needs manual review. Open Check page coverage to inspect each original PDF page. For scanned text, prepare a searchable PDF with OCR elsewhere and upload it. For diagrams, inspect the original page.
+
+Mind maps and roadmaps open in Fit page. Use Fit graph to page after manual zoom. Read the complete topic content below the graphic without zoom; expand subtopics and check source pages. Changing outputs resets diagram zoom.

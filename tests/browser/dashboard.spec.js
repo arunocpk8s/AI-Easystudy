@@ -60,7 +60,8 @@ test('reference views show real stages and both graphs have navigable source lin
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog',{name:'Source evidence'})).not.toBeVisible();
   await page.getByRole('button',{name:'Zoom in',exact:true}).click();
-  await expect(page.locator('.graph-actions')).toContainText('100%');
+  await expect(page.locator('.graph-actions')).not.toContainText('Fit page');
+  await page.getByRole('button',{name:'Fit graph to page'}).click();await expect(page.locator('.graph-actions')).toContainText('Fit page');
   const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Export SVG',exact:true}).click();
   expect((await downloadPromise).suggestedFilename()).toBe('study-mindmap.svg');
   await page.getByRole('button',{name:'Study roadmap',exact:true}).click();

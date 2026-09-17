@@ -2,7 +2,7 @@
   "answerableHitAt1": 1,
   "answerableHitAt3": 1,
   "unsupportedNoMatchRate": 1,
-  "date": "2026-09-17T15:38:24.970Z",
+  "date": "2026-09-17T15:41:34.374Z",
   "scope": "English keyword retrieval on original four-page demo fixture. Not a textbook or AI quality benchmark.",
   "total": 10,
   "hitAt3": 1,
@@ -19,7 +19,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 1.8423999999999978
+      "latencyMs": 1.1562999999999946
     },
     {
       "id": "g02",
@@ -32,7 +32,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.18260000000000076
+      "latencyMs": 0.14580000000000126
     },
     {
       "id": "g03",
@@ -45,7 +45,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.11780000000000257
+      "latencyMs": 0.11639999999999873
     },
     {
       "id": "g04",
@@ -58,7 +58,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.10540000000000305
+      "latencyMs": 0.11069999999999425
     },
     {
       "id": "g05",
@@ -71,7 +71,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.11339999999999861
+      "latencyMs": 0.11169999999999902
     },
     {
       "id": "g06",
@@ -83,7 +83,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.08040000000000447
+      "latencyMs": 0.07679999999999865
     },
     {
       "id": "g07",
@@ -107,7 +107,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.10369999999999635
+      "latencyMs": 0.11120000000000374
     },
     {
       "id": "g09",
@@ -116,7 +116,7 @@
       "retrievedPages": [],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.06989999999999696
+      "latencyMs": 0.06650000000000489
     },
     {
       "id": "g10",
@@ -125,7 +125,7 @@
       "retrievedPages": [],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 1.0457999999999998
+      "latencyMs": 0.9108000000000018
     }
   ]
 }
