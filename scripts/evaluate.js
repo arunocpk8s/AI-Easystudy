@@ -1,0 +1,7 @@
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {samplePages} from '../src/lib/sample.js';
+import {chunkPages,retrieve} from '../src/lib/rag.js';
+const golden=JSON.parse(readFileSync('evaluation/golden.json','utf8'));const chunks=chunkPages(samplePages);
+const results=golden.map(q=>{const start=performance.now();const retrieved=retrieve(chunks,q.question,3);return {...q,retrievedPages:retrieved.map(c=>c.page),hit:q.expectedPage===null?retrieved.length===0:retrieved.some(c=>c.page===q.expectedPage),hitAt1:q.expectedPage===null?retrieved.length===0:retrieved[0]?.page===q.expectedPage,latencyMs:performance.now()-start};});
+const answerable=results.filter(r=>r.expectedPage!==null);const unsupported=results.filter(r=>r.expectedPage===null);const report={answerableHitAt1:answerable.filter(r=>r.hitAt1).length/answerable.length,answerableHitAt3:answerable.filter(r=>r.hit).length/answerable.length,unsupportedNoMatchRate:unsupported.filter(r=>r.hit).length/unsupported.length,date:new Date().toISOString(),scope:'English keyword retrieval on original four-page demo fixture. Not a textbook or AI quality benchmark.',total:results.length,hitAt3:results.filter(r=>r.hit).length/results.length,hitAt1:results.filter(r=>r.hitAt1).length/results.length,results};
+mkdirSync('evaluation/results',{recursive:true});writeFileSync('evaluation/results/baseline.json',JSON.stringify(report,null,2));console.log(JSON.stringify({total:report.total,hitAt1:report.hitAt1,hitAt3:report.hitAt3,scope:report.scope},null,2));

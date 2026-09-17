@@ -1,0 +1,131 @@
+{
+  "answerableHitAt1": 1,
+  "answerableHitAt3": 1,
+  "unsupportedNoMatchRate": 1,
+  "date": "2026-09-17T14:38:37.979Z",
+  "scope": "English keyword retrieval on original four-page demo fixture. Not a textbook or AI quality benchmark.",
+  "total": 10,
+  "hitAt3": 1,
+  "hitAt1": 1,
+  "results": [
+    {
+      "id": "g01",
+      "question": "types of electric charge",
+      "expectedPage": 1,
+      "retrievedPages": [
+        1,
+        4,
+        3
+      ],
+      "hit": true,
+      "hitAt1": true,
+      "latencyMs": 1.3157999999999994
+    },
+    {
+      "id": "g02",
+      "question": "charge quantised conserved elementary",
+      "expectedPage": 1,
+      "retrievedPages": [
+        1,
+        4,
+        3
+      ],
+      "hit": true,
+      "hitAt1": true,
+      "latencyMs": 0.17020000000000124
+    },
+    {
+      "id": "g03",
+      "question": "Coulomb force separation distance",
+      "expectedPage": 2,
+      "retrievedPages": [
+        2,
+        3,
+        1
+      ],
+      "hit": true,
+      "hitAt1": true,
+      "latencyMs": 0.11500000000000199
+    },
+    {
+      "id": "g04",
+      "question": "superposition vector sum forces",
+      "expectedPage": 2,
+      "retrievedPages": [
+        2,
+        3,
+        4
+      ],
+      "hit": true,
+      "hitAt1": true,
+      "latencyMs": 0.09730000000000416
+    },
+    {
+      "id": "g05",
+      "question": "electric field test charge newton",
+      "expectedPage": 3,
+      "retrievedPages": [
+        3,
+        4,
+        1
+      ],
+      "hit": true,
+      "hitAt1": true,
+      "latencyMs": 0.10739999999999839
+    },
+    {
+      "id": "g06",
+      "question": "field lines intersect direction",
+      "expectedPage": 3,
+      "retrievedPages": [
+        3,
+        4
+      ],
+      "hit": true,
+      "hitAt1": true,
+      "latencyMs": 0.11610000000000298
+    },
+    {
+      "id": "g07",
+      "question": "potential scalar energy volt",
+      "expectedPage": 4,
+      "retrievedPages": [
+        4
+      ],
+      "hit": true,
+      "hitAt1": true,
+      "latencyMs": 0.07730000000000103
+    },
+    {
+      "id": "g08",
+      "question": "zero potential does not imply zero field",
+      "expectedPage": 4,
+      "retrievedPages": [
+        4,
+        3,
+        1
+      ],
+      "hit": true,
+      "hitAt1": true,
+      "latencyMs": 0.10579999999999501
+    },
+    {
+      "id": "g09",
+      "question": "photosynthesis chlorophyll",
+      "expectedPage": null,
+      "retrievedPages": [],
+      "hit": true,
+      "hitAt1": true,
+      "latencyMs": 0.06960000000000122
+    },
+    {
+      "id": "g10",
+      "question": "mitochondria respiration ATP",
+      "expectedPage": null,
+      "retrievedPages": [],
+      "hit": true,
+      "hitAt1": true,
+      "latencyMs": 1.0132999999999939
+    }
+  ]
+}

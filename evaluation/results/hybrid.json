@@ -1,0 +1,177 @@
+{
+  "model": "Xenova/multilingual-e5-small",
+  "date": "2026-09-17T14:38:29.892Z",
+  "scope": "Real browser multilingual embeddings and RRF on original demo fixture, not teacher-reviewed textbook evaluation.",
+  "indexingMs": 27257.5,
+  "results": [
+    {
+      "id": "g01",
+      "question": "types of electric charge",
+      "expectedPage": 1,
+      "pages": [
+        1,
+        3,
+        4
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "latencyMs": 29.300000000745058
+    },
+    {
+      "id": "g02",
+      "question": "charge quantised conserved elementary",
+      "expectedPage": 1,
+      "pages": [
+        1,
+        3,
+        4
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "latencyMs": 34.099999997764826
+    },
+    {
+      "id": "g03",
+      "question": "Coulomb force separation distance",
+      "expectedPage": 2,
+      "pages": [
+        2,
+        3,
+        1
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "latencyMs": 31.800000000745058
+    },
+    {
+      "id": "g04",
+      "question": "superposition vector sum forces",
+      "expectedPage": 2,
+      "pages": [
+        2,
+        3,
+        4
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "latencyMs": 32.79999999701977
+    },
+    {
+      "id": "g05",
+      "question": "electric field test charge newton",
+      "expectedPage": 3,
+      "pages": [
+        3,
+        1,
+        4
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "latencyMs": 33.20000000298023
+    },
+    {
+      "id": "g06",
+      "question": "field lines intersect direction",
+      "expectedPage": 3,
+      "pages": [
+        3,
+        4,
+        2
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "latencyMs": 28.699999999254942
+    },
+    {
+      "id": "g07",
+      "question": "potential scalar energy volt",
+      "expectedPage": 4,
+      "pages": [
+        4,
+        3,
+        1
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "latencyMs": 26.300000000745058
+    },
+    {
+      "id": "g08",
+      "question": "zero potential does not imply zero field",
+      "expectedPage": 4,
+      "pages": [
+        4,
+        3,
+        1
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "latencyMs": 27.099999997764826
+    },
+    {
+      "id": "g09",
+      "question": "photosynthesis chlorophyll",
+      "expectedPage": null,
+      "pages": [
+        2,
+        4,
+        3
+      ],
+      "hitAt1": false,
+      "hitAt3": false,
+      "latencyMs": 24.300000000745058
+    },
+    {
+      "id": "g10",
+      "question": "mitochondria respiration ATP",
+      "expectedPage": null,
+      "pages": [
+        2,
+        4,
+        3
+      ],
+      "hitAt1": false,
+      "hitAt3": false,
+      "latencyMs": 23.300000000745058
+    },
+    {
+      "id": "ta01",
+      "question": "மின்னழுத்தம் என்றால் என்ன?",
+      "expectedPage": 4,
+      "pages": [
+        1,
+        3,
+        4
+      ],
+      "hitAt1": false,
+      "hitAt3": true,
+      "latencyMs": 25
+    },
+    {
+      "id": "ta02",
+      "question": "மின்புலம் என்றால் என்ன?",
+      "expectedPage": 3,
+      "pages": [
+        1,
+        4,
+        3
+      ],
+      "hitAt1": false,
+      "hitAt3": true,
+      "latencyMs": 25.5
+    },
+    {
+      "id": "ta03",
+      "question": "கூலூம் விதியை விளக்கவும்",
+      "expectedPage": 2,
+      "pages": [
+        2,
+        1,
+        3
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "latencyMs": 24.899999998509884
+    }
+  ]
+}
