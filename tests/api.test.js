@@ -40,3 +40,9 @@ test('nested citations and exact textbook quotations are enforced',()=>{
  assert.throws(()=>validateOutput({items:[item]},evidence,'mindmap'));
  assert.throws(()=>validateOutput({items:[item]},evidence,'roadmap'));
 });
+
+test('cloud quizzes reject descriptive questions and require exactly four options',()=>{
+ const item={title:'Choose',body:'Source',sources:['S1'],answer:'Repel'};
+ assert.throws(()=>validateOutput({items:[item]},evidence,'quiz'));
+ assert.throws(()=>validateOutput({items:[{...item,options:['Repel','Attract','Disappear']}]},evidence,'quiz'));
+});

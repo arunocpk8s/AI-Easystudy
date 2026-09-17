@@ -6,7 +6,7 @@ env.backends.onnx.wasm.numThreads=1;
 let translator;const cache=new Map();let queue=Promise.resolve();
 async function run({id,text,source,target,subject}){
  try{
-  if(!LANGUAGE_CODES[source]||!LANGUAGE_CODES[target])throw new Error('Local translation supports English and Tamil only.');
+  if(!LANGUAGE_CODES[source]||!LANGUAGE_CODES[target])throw new Error('Local translation supports English, Tamil and Hindi.');
   const term=terminologyTranslation(text,source,target,subject);if(term){self.postMessage({id,type:'result',text:term});return;}
   const key=JSON.stringify([source,target,subject,text]);if(cache.has(key)){self.postMessage({id,type:'result',text:cache.get(key)});return;}
   if(!translator){
@@ -23,7 +23,7 @@ async function run({id,text,source,target,subject}){
    if(!/\p{L}/u.test(chunk)||/^[\w\s²³₀-₉α-ωε∝\/|+*^().-]+\s*=\s*[^\n]+$/u.test(chunk)){translated.push(chunk);continue;}
    const parts=chunk.split(/(_{3,})/);const output=[];
    for(const part of parts){if(!part.trim()||/^_{3,}$/.test(part)){output.push(part);continue;}
-    if(source==='English'&&/[\u0B80-\u0BFF]/.test(part)){output.push(part);continue;}
+    if(source==='English'&&/[\u0B80-\u0BFF\u0900-\u097F]/.test(part)){output.push(part);continue;}
     const value=await translator(prepareTranslationInput(part,source,subject),{src_lang:LANGUAGE_CODES[source],tgt_lang:LANGUAGE_CODES[target],max_new_tokens:256,num_beams:4});
     const translatedText=value?.[0]?.translation_text?.trim();if(!translatedText)throw new Error('The local model returned an empty translation.');output.push(normalizeTranslationTerms(translatedText,source,target,subject));
    }translated.push(output.join(' '));

@@ -3,11 +3,11 @@ import {Upload,Network,NotebookText,Layers,AlignLeft,FileQuestion,TriangleAlert,
 const tools=[
   {id:'mindmap',label:'Mind map',description:'Topic hierarchy and links',icon:Network},
   {id:'notes',label:'Short notes',description:'Exam-focused key points',icon:NotebookText},
-  {id:'flashcards',label:'Flash cards',description:'Question / answer cards',icon:Layers},
+  {id:'flashcards',label:'Flash cards',description:'Visual concept cards · reveal and recall',icon:Layers},
   {id:'summary',label:'Summary',description:'Topic and chapter views',icon:AlignLeft},
   {id:'questions',label:'Question types',description:'Suggested 1, 2, 3, 5-mark practice in AI mode',icon:FileQuestion},
   {id:'confusions',label:'Misconceptions',description:'Potentially confused ideas · review with a teacher',icon:TriangleAlert},
-  {id:'quiz',label:'Quiz',description:'MCQ and descriptive in AI mode · cloze without API',icon:ListChecks},
+  {id:'quiz',label:'Quiz',description:'Four-option MCQs · feedback and source evidence',icon:ListChecks},
   {id:'roadmap',label:'Study roadmap',description:'Connected learning steps to revision',icon:Route}
 ];
 export default function StudentDashboard({doc,busy,onUpload,onDrop,onGenerate,onAsk,onRemove,classLevel,setClassLevel,subject,setSubject,language,setLanguage}){
@@ -19,7 +19,7 @@ export default function StudentDashboard({doc,busy,onUpload,onDrop,onGenerate,on
       <div className="document-preferences">
         <label>Class<select aria-label="Class" value={classLevel} disabled={!!busy} onChange={e=>setClassLevel(e.target.value)}><option value="11">Class 11</option><option value="12">Class 12</option><option value="Other">Other</option></select></label>
         <label>Subject<select aria-label="Subject" value={subject} disabled={!!busy} onChange={e=>setSubject(e.target.value)}>{['Physics','Chemistry','Mathematics','Biology','English','History','Geography','Economics','Computer Science','Other'].map(s=><option key={s}>{s}</option>)}</select></label>
-        <label>Preferred language<select aria-label="Preferred language" value={language} disabled={!!busy} onChange={e=>setLanguage(e.target.value)}><option>English</option><option>Tamil</option></select></label>
+        <label>Preferred language<select aria-label="Preferred language" value={language} disabled={!!busy} onChange={e=>setLanguage(e.target.value)}><option>English</option><option>Tamil</option><option>Hindi</option></select></label>
       </div>
       <button className="choose-pdf" onClick={onUpload} disabled={!!busy}>Choose PDF</button>
       <small>20 MB maximum · Up to 200 pages · PDF stays on your device</small>

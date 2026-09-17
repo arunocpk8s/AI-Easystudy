@@ -1,5 +1,5 @@
 export const TRANSLATION_MODEL='Xenova/nllb-200-distilled-600M';
-export const LANGUAGE_CODES={English:'eng_Latn',Tamil:'tam_Taml'};
+export const LANGUAGE_CODES={English:'eng_Latn',Tamil:'tam_Taml',Hindi:'hin_Deva'};
 // Short segments avoid silently truncating long paragraphs at model input limits.
 export function splitTranslationText(text,maxLength=320){
  const parts=[];
@@ -20,7 +20,13 @@ export async function translateStudyItems(items,translate){
   if(value&&typeof value==='object'){const out={};for(const [name,child]of Object.entries(value))out[name]=await visit(child,name);return out;}
   return value;
  }
- for(const item of items)result.push({...await visit(item),original:structuredClone(item)});return result;
+ for(const item of items){
+  const translated={...await visit(item),original:structuredClone(item)};
+  if(item.options){const answerIndex=item.options.indexOf(item.answer);if(answerIndex<0)throw new Error('Quiz answer does not match its options.');
+   if(new Set(translated.options).size!==translated.options.length)translated.options=translated.options.map((option,i)=>`${option} (${item.options[i]})`);
+   translated.answer=translated.options[answerIndex];
+  }result.push(translated);
+ }return result;
 }
 
 // Project-authored physics terminology aids: not a guarantee of sentence accuracy.

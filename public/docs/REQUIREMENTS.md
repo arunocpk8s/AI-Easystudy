@@ -6,7 +6,7 @@ Students struggle to navigate long documents, distinguish related concepts, and 
 
 Primary users: Class 11/12 students. Secondary users: teachers checking output and project reviewers examining the RAG implementation. PDF content is chosen by the learner; class and subject are not hard-coded.
 
-MVP accepts printed, text-based PDFs of up to 20 MB and 200 pages. English extractive materials preserve source language; AI outputs support English or Tamil. Reading extraction is not guaranteed for every PDF. Password-protected, damaged and scanned PDFs may fail or produce warnings. OCR, diagrams, handwritten content, persistent storage and multi-user accounts are outside the current implementation.
+MVP accepts printed, text-based PDFs of up to 20 MB and 200 pages. English extractive materials preserve source language; AI outputs support English, Tamil or Hindi. Reading extraction is not guaranteed for every PDF. Password-protected, damaged and scanned PDFs may fail or produce warnings. OCR, diagrams, handwritten content, persistent storage and multi-user accounts are outside the current implementation.
 
 ## Functional requirements and acceptance criteria
 
@@ -51,6 +51,12 @@ Student view: upload area, class/subject/language selectors, eight main tool car
 
 ## Browser-local translation
 
-No provider API key is required. English source aids → Tamil using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
+No provider API key is required. English source aids → Tamil / Hindi using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
 
 Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (structured provenance-safe traversal and bounded segments), `src/workers/translation.worker.js` (download, WASM translation, sequential queue and in-memory translation cache). Cache strings are cleared on document replacement/removal; model files may remain in browser cache. Model pinned to Xenova/nllb-200-distilled-600M at revision 261c31d1a5732c67cdd16d80e8d6088507c7ccea, CC-BY-NC-4.0, based on Meta NLLB-200.
+
+## Final study features
+
+Visual flashcards use source-linked code-native SVG concept diagrams with reveal controls, individual SVG image downloads and printing. MCQ quizzes require four unique options and one matching answer in every mode. Source-only MCQs are exact-wording recall questions (maximum 10), not inferred conceptual exam questions. Conceptual demo MCQs are manually authored; cloud MCQs depend on model grounding. Selected options are scored after submission; explanation and evidence remain visible.
+
+Hindi is available alongside English and Tamil. Local Hindi uses hin_Deva in the existing NLLB model; Hindi questions are translated to English before retrieval. Cloud input accepts Hindi and requests Hindi explanations. Original quotes, formulas and citations stay unchanged. When option translations collapse to identical words, original option labels disambiguate them and the correct answer follows its original option index.

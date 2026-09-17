@@ -17,3 +17,9 @@ test('physics terminology is scoped and ambiguous electrical charge receives con
  assert.equal(normalizeTranslationTerms('கட்டணம்','English','Tamil','Economics'),'கட்டணம்');
  assert.deepEqual(splitTranslationText('Like charges repel. Unlike charges attract.'),['Like charges repel.','Unlike charges attract.']);
 });
+
+test('Hindi uses the supported language code and collapsed translated choices remain unique',async()=>{
+ assert.equal(LANGUAGE_CODES.Hindi,'hin_Deva');const item={title:'Question',body:'Evidence',sources:['S1'],options:['Repel','Attract','Disappear','Stay'],answer:'Attract'};
+ const [translated]=await translateStudyItems([item],async()=> 'विकल्प');
+ assert.equal(new Set(translated.options).size,4);assert.equal(translated.answer,translated.options[1]);assert.deepEqual(translated.sources,['S1']);
+});

@@ -26,8 +26,8 @@ test('hybrid retrieval uses vector and keyword rankings without duplicate passag
   const results=retrieve(chunks,'மின்னழுத்தம்',2,[[1,0],[0,1]],[0,1]);
   assert.equal(results[0].id,'S2');assert.equal(new Set(results.map(c=>c.id)).size,results.length);
 });
-test('all extractive tools preserve valid references; quizzes include a hidden-word answer',()=>{
+test('all extractive tools preserve valid references; quizzes have four unique options and a matching answer',()=>{
   const chunks=chunkPages(samplePages);const ids=new Set(chunks.map(c=>c.id));
   for(const feature of FEATURES){const items=extractiveMaterials(chunks,feature.id);assert.ok(items.length);assert.ok(items.every(i=>i.sources.every(s=>ids.has(s))));}
-  assert.ok(extractiveMaterials(chunks,'quiz').every(i=>i.answer&&i.title.includes('________')));
+  assert.ok(extractiveMaterials(chunks,'quiz').every(i=>i.options.length===4&&new Set(i.options).size===4&&i.options.includes(i.answer)));
 });

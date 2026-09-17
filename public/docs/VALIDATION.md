@@ -91,3 +91,10 @@ A mocked AI response also verified multiple-choice selection, hidden feedback be
 - Production build and English fixture retrieval evaluation passed. This does not verify the user PDF, OCR, diagrams or Tamil answer correctness.
 
 Normal-size topic-reader screenshot visually reviewed; definitions, formulas, self-checks and block-level page references are readable.
+
+## Visual cards, MCQs and Hindi release
+
+- 18 Node tests passed. Cloud quizzes reject descriptive output and require four unique options with one matching answer. Local source MCQs retain valid page citations. Hindi mapping uses hin_Deva; translated answer indices survive duplicate option wording through original-label disambiguation.
+- 28 desktop/mobile browser cases passed: diagram reveal, individual second-card SVG download, reveal-all, four-option MCQs, score/feedback, source links, Hindi local content and Hindi query translation before retrieval. Hindi browser inference is mocked; it does not establish language quality.
+- Production build and original English keyword retrieval evaluation passed. Cloud live Hindi generation is not tested without provider keys.
+- GitHub MCP fetched the user-supplied AI-Easystudy repository and confirmed it was empty with push permission. Vercel CLI account authentication succeeded. Deployment status will be recorded separately after public checks.

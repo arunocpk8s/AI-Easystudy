@@ -10,7 +10,19 @@ export function demoMaterials(chunks,feature,language){
     const content=tamil?lesson.ta:lesson.en;const id=lesson.id;
     const item={title:content.title,body:content.definition,sources:[id],definition:point(content.definition,id),keyPoints:content.points.map(p=>point(p,id)),formula:content.formula?point(content.formula,id):undefined,example:content.example?point(content.example,id):undefined,misconception:content.misconception?point(content.misconception,id):undefined,subtopics:content.groups.map(([title,...points])=>({title,points:points.map(p=>point(p,id)),sources:[id]})),learningGoal:content.goal,checkpoint:point(content.check,id)};
     if(feature==='flashcards')return {...item,title:content.check,body:content.answer};
-    if(feature==='quiz')return {...item,title:content.check,body:content.definition,answer:content.answer};
+    if(feature==='quiz'){
+      const quiz=tamil?[
+       ['ஒத்த மின்சுமைகள் ஒன்றுடன் ஒன்று எவ்வாறு செயல்படுகின்றன?',['விலக்குகின்றன','ஈர்க்கின்றன','மறைந்துவிடுகின்றன','புலம் உருவாக்காது'],'விலக்குகின்றன'],
+       ['இடைவெளி இரட்டிப்பானால் கூலூம் விசை என்னவாகும்?',['F/4','2F','F/2','4F'],'F/4'],
+       ['மின்புலத்தின் SI அலகு எது?',['N/C','J/C','C','J'],'N/C'],
+       ['ஓரலகு மின்சுமைக்கான நிலை ஆற்றல் எந்த அளவை வரையறுக்கிறது?',['மின்னழுத்தம்','மின்புலம்','மின் விசை','மின்சுமை'],'மின்னழுத்தம்']
+      ]:[
+       ['How do like electric charges interact?',['Repel','Attract','Disappear','Produce no field'],'Repel'],
+       ['If separation doubles, what happens to Coulomb force F?',['F/4','2F','F/2','4F'],'F/4'],
+       ['What is the SI unit of electric field?',['N/C','J/C','C','J'],'N/C'],
+       ['Which quantity is potential energy per unit charge?',['Electric potential','Electric field','Electric force','Electric charge'],'Electric potential']
+      ];const [title,choices,answer]=quiz[index];const options=[...choices];for(let n=0;n<=index;n++)options.push(options.shift());return {...item,title,options,answer,body:[content.definition,...content.points,content.formula,content.example].filter(Boolean).join('\n')};
+    }
     if(feature==='questions')return {...item,title:`${index+1===4?5:index+1} ${tamil?'மதிப்பெண் பயிற்சி':'mark practice'}: ${content.title}`,body:content.check,answer:content.answer};
     if(feature==='confusions')return {...item,title:content.title,body:content.misconception||content.points.join('\n')};
     if(feature==='roadmap')return {...item,body:content.goal};

@@ -111,7 +111,7 @@ In Student view choose Mind map or Study roadmap. Click a node to open its full 
 ## Visual study workflow
 
 1. Configure GROQ_API_KEY and STUDY_ACCESS_TOKEN on the server; restart locally or redeploy on Vercel.
-2. Enter the workspace token in Settings. Select English or Tamil. Tamil uploaded-document source aids select local translation automatically. Explicit AI explanations remain available with configured server keys.
+2. Enter the workspace token in Settings. Select English, Tamil or Hindi. Tamil uploaded-document source aids select local translation automatically. Explicit AI explanations remain available with configured server keys.
 3. Generate notes, mind map or roadmap. Check individual source links before trusting an explanation.
 4. Use Print / Save PDF for notebook slides or Export SVG for editable diagrams. On large documents use graph pagination to inspect every topic.
 5. Open Visual HLD / LLD, select components, and download SVG or print standalone diagrams.
@@ -120,7 +120,7 @@ The bilingual original demo is manually authored. Source preview preserves langu
 
 ## Browser-local translation
 
-No provider API key is required. English source aids → Tamil using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
+No provider API key is required. English source aids → Tamil / Hindi using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
 
 Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (structured provenance-safe traversal and bounded segments), `src/workers/translation.worker.js` (download, WASM translation, sequential queue and in-memory translation cache). Cache strings are cleared on document replacement/removal; model files may remain in browser cache. Model pinned to Xenova/nllb-200-distilled-600M at revision 261c31d1a5732c67cdd16d80e8d6088507c7ccea, CC-BY-NC-4.0, based on Meta NLLB-200.
 
@@ -129,3 +129,9 @@ Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (str
 Refresh and upload the PDF again after updating this version; existing in-memory documents keep their earlier parsing report. Read Document reading summary: blank pages are skipped automatically, short text is included, and visible no-text content needs manual review. Open Check page coverage to inspect each original PDF page. For scanned text, prepare a searchable PDF with OCR elsewhere and upload it. For diagrams, inspect the original page.
 
 Mind maps and roadmaps open in Fit page. Use Fit graph to page after manual zoom. Read the complete topic content below the graphic without zoom; expand subtopics and check source pages. Changing outputs resets diagram zoom.
+
+## Final study features
+
+Visual flashcards use source-linked code-native SVG concept diagrams with reveal controls, individual SVG image downloads and printing. MCQ quizzes require four unique options and one matching answer in every mode. Source-only MCQs are exact-wording recall questions (maximum 10), not inferred conceptual exam questions. Conceptual demo MCQs are manually authored; cloud MCQs depend on model grounding. Selected options are scored after submission; explanation and evidence remain visible.
+
+Hindi is available alongside English and Tamil. Local Hindi uses hin_Deva in the existing NLLB model; Hindi questions are translated to English before retrieval. Cloud input accepts Hindi and requests Hindi explanations. Original quotes, formulas and citations stay unchanged. When option translations collapse to identical words, original option labels disambiguate them and the correct answer follows its original option index.

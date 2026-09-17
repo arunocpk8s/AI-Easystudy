@@ -106,7 +106,7 @@ Student view presents eight main cards plus revision notes and PDF Q&A. Behind t
 
 ## Browser-local translation
 
-No provider API key is required. English source aids → Tamil using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
+No provider API key is required. English source aids → Tamil / Hindi using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
 
 Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (structured provenance-safe traversal and bounded segments), `src/workers/translation.worker.js` (download, WASM translation, sequential queue and in-memory translation cache). Cache strings are cleared on document replacement/removal; model files may remain in browser cache. Model pinned to Xenova/nllb-200-distilled-600M at revision 261c31d1a5732c67cdd16d80e8d6088507c7ccea, CC-BY-NC-4.0, based on Meta NLLB-200.
 
@@ -117,3 +117,9 @@ Physics subject mode uses a small project-authored terminology glossary for exac
 PDF extraction retains every original page number. Pages with selectable text are included even if short. No-text pages are rendered locally into a 256-pixel preview: a white preview is treated as blank; visible marks require manual review; preview failure is reported as unknown. Blank pages do not create chunks or OCR warnings. Preview classification is a heuristic, not OCR or diagram interpretation. `pageReport` supports per-page coverage and original-page inspection.
 
 StudyGraph starts in responsive Fit page mode, uses ResizeObserver for container width, and resets manual zoom on new outputs. The full diagram uses normal document scrolling rather than a vertically constrained canvas. TopicReader provides untruncated definitions, key points, all subtopics, formulas, evidence examples, learning goals and self-checks with source links at normal reading size. Optional zoom remains available for diagram details. Architecture diagrams fit their container too.
+
+## Final study features
+
+Visual flashcards use source-linked code-native SVG concept diagrams with reveal controls, individual SVG image downloads and printing. MCQ quizzes require four unique options and one matching answer in every mode. Source-only MCQs are exact-wording recall questions (maximum 10), not inferred conceptual exam questions. Conceptual demo MCQs are manually authored; cloud MCQs depend on model grounding. Selected options are scored after submission; explanation and evidence remain visible.
+
+Hindi is available alongside English and Tamil. Local Hindi uses hin_Deva in the existing NLLB model; Hindi questions are translated to English before retrieval. Cloud input accepts Hindi and requests Hindi explanations. Original quotes, formulas and citations stay unchanged. When option translations collapse to identical words, original option labels disambiguate them and the correct answer follows its original option index.
