@@ -107,3 +107,13 @@ Use Git history to identify the last passing source state. Redeploy that state o
 ## Graphical study tools
 
 In Student view choose Mind map or Study roadmap. Click a node to open its full text and source buttons. Use zoom controls and scroll the canvas. More than six topics are paginated; no topics are silently discarded. Export SVG saves the displayed diagram page, while the general Markdown export saves all study items. In the roadmap, Mark as reviewed tracks progress for this session. Class, subject and language choices guide generation; they do not verify syllabus alignment. The Behind the RAG tab distinguishes measured work from optional embedding and unavailable OCR.
+
+## Visual study workflow
+
+1. Configure GROQ_API_KEY and STUDY_ACCESS_TOKEN on the server; restart locally or redeploy on Vercel.
+2. Enter the workspace token in Settings. Select English or Tamil. Tamil uploaded-document explanations select AI automatically.
+3. Generate notes, mind map or roadmap. Check individual source links before trusting an explanation.
+4. Use Print / Save PDF for notebook slides or Export SVG for editable diagrams. On large documents use graph pagination to inspect every topic.
+5. Open Visual HLD / LLD, select components, and download SVG or print standalone diagrams.
+
+The bilingual original demo is manually authored. Source previews do not translate documents. Live AI reliability and Vercel deployment require actual service configuration; mock tests do not establish them.

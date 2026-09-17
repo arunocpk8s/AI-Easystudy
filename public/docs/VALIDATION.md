@@ -63,3 +63,12 @@ Vercel-ready configuration is present. Vercel MCP was found but is not connected
 Replaced the sidebar overview with Student view and Behind the RAG tabs matching the supplied reference structure. Added class/subject/language controls. Mind maps and roadmaps now use connected SVG nodes with zoom, paginated coverage, source inspection and export. Roadmaps support local reviewed state. New browser checks verify these on desktop/mobile, including keyboard Escape from source dialogs. Selector accessible names were corrected after the first new test run. AI MCQ options and answers are schema-validated; live generation is still unverified without credentials. PDF preparation has separate measured validation, decode, structure, chunk and source-lookup timings. The dashboard does not claim OCR, Qdrant or fixed processing-time estimates.
 
 A mocked AI response also verified multiple-choice selection, hidden feedback before submission, and forwarding of class/subject context. This validates UI behavior, not live provider quality.
+
+## Notebook and graphical design update
+
+- 12 Node tests passed: source selection/refusal, compact formulas, page provenance, manually authored Tamil demo, nested citations and exact quotation validation.
+- 14 Playwright cases passed across desktop/mobile: notebook notes, graphical source navigation, quiz, responsive upload, interactive HLD/LLD and mocked Tamil query translation before retrieval.
+- Production build passed; English demo keyword golden evaluation remains 8/8 answerable hits at rank 1 plus two unsupported cases. This is not a textbook answer-quality benchmark.
+- Printable original demo artifacts: mind map, roadmap, four-topic notes; HLD/LLD exported as HTML, SVG and PDF. English mind map and HLD screenshots visually inspected.
+- A failing formula-preservation test identified short-sentence filtering; fixed by preserving compact mathematical statements. Architecture print pagination was corrected to a landscape diagram page.
+- Live Groq explanations and Tamil translation on arbitrary PDFs remain unverified because server secrets are absent. Vercel deployment awaits account authentication.

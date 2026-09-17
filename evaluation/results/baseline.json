@@ -2,7 +2,7 @@
   "answerableHitAt1": 1,
   "answerableHitAt3": 1,
   "unsupportedNoMatchRate": 1,
-  "date": "2026-09-17T14:54:15.666Z",
+  "date": "2026-09-17T15:17:08.910Z",
   "scope": "English keyword retrieval on original four-page demo fixture. Not a textbook or AI quality benchmark.",
   "total": 10,
   "hitAt3": 1,
@@ -19,7 +19,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 1.4252999999999965
+      "latencyMs": 1.1872000000000043
     },
     {
       "id": "g02",
@@ -32,7 +32,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.18029999999999546
+      "latencyMs": 0.17420000000000613
     },
     {
       "id": "g03",
@@ -45,7 +45,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.11769999999999925
+      "latencyMs": 0.10040000000000049
     },
     {
       "id": "g04",
@@ -58,7 +58,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.10180000000000433
+      "latencyMs": 0.12040000000000362
     },
     {
       "id": "g05",
@@ -71,7 +71,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.13179999999999836
+      "latencyMs": 0.10739999999999839
     },
     {
       "id": "g06",
@@ -83,7 +83,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.0753999999999948
+      "latencyMs": 0.07469999999999999
     },
     {
       "id": "g07",
@@ -94,7 +94,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.08439999999999515
+      "latencyMs": 0.07639999999999958
     },
     {
       "id": "g08",
@@ -107,7 +107,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.12359999999999616
+      "latencyMs": 0.10150000000000148
     },
     {
       "id": "g09",
@@ -116,7 +116,7 @@
       "retrievedPages": [],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.06810000000000116
+      "latencyMs": 0.06680000000000064
     },
     {
       "id": "g10",
@@ -125,7 +125,7 @@
       "retrievedPages": [],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 1.052100000000003
+      "latencyMs": 0.984499999999997
     }
   ]
 }

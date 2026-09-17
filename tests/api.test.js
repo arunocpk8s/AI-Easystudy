@@ -6,7 +6,7 @@ function response(){return {headers:{},setHeader(k,v){this.headers[k]=v;},end(da
 test('model output must cite supplied IDs and quizzes need answers',()=>{
   assert.throws(()=>validateOutput({items:[{title:'Claim',body:'Text',sources:['S99']}]},evidence,'notes'));
   assert.throws(()=>validateOutput({items:[{title:'Question',body:'Text',sources:['S1']}]},evidence,'quiz'));
-  assert.equal(validateOutput({items:[{title:'Charge',body:'Like charges repel.',sources:['S1']}]},evidence,'notes').items.length,1);
+  assert.equal(validateOutput({items:[{title:'Charge',body:'Like charges repel.',sources:['S1'],keyPoints:[{text:'Like charges repel.',sources:['S1']}]}]},evidence,'notes').items.length,1);
 });
 test('API checks configuration, token, input, and validates provider output',async()=>{
   const oldKey=process.env.GROQ_API_KEY,oldToken=process.env.STUDY_ACCESS_TOKEN;
@@ -16,7 +16,7 @@ test('API checks configuration, token, input, and validates provider output',asy
     process.env.GROQ_API_KEY='test-not-real';process.env.STUDY_ACCESS_TOKEN='test-token';
     res=response();await handleStudy({method:'POST',headers:{},body:{}},res);assert.equal(res.statusCode,401);
     const req={method:'POST',headers:{'x-study-token':'test-token'},body:{feature:'notes',language:'English',evidence}};
-    res=response();await handleStudy(req,res,async()=>({ok:true,json:async()=>({choices:[{message:{content:JSON.stringify({items:[{title:'Charge',body:'Like charges repel.',sources:['S1']}]})}}],usage:{prompt_tokens:20,completion_tokens:10}})}));
+    res=response();await handleStudy(req,res,async()=>({ok:true,json:async()=>({choices:[{message:{content:JSON.stringify({items:[{title:'Charge',body:'Like charges repel.',sources:['S1'],keyPoints:[{text:'Like charges repel.',sources:['S1']}]}]})}}],usage:{prompt_tokens:20,completion_tokens:10}})}));
     assert.equal(res.statusCode,200);assert.equal(res.data.items[0].sources[0],'S1');assert.equal(res.data.usage.prompt_tokens,20);
     res=response();await handleStudy({...req,body:{...req.body,feature:'ask'}},res);assert.equal(res.statusCode,400);
     res=response();await handleStudy(req,res,async()=>({ok:false,status:429}));assert.equal(res.statusCode,429);
@@ -30,4 +30,13 @@ test('multiple-choice output must have unique options and a matching answer',()=
   assert.equal(validateOutput({items:[item]},evidence,'quiz').items[0].options.length,4);
   assert.throws(()=>validateOutput({items:[{...item,answer:'Invalid'}]},evidence,'quiz'));
   assert.throws(()=>validateOutput({items:[{...item,options:['Repel','Repel']}]},evidence,'quiz'));
+});
+
+test('nested citations and exact textbook quotations are enforced',()=>{
+ const item={title:'Charge',body:'Repulsion',sources:['S1'],keyPoints:[{text:'Like charges repel.',sources:['S1']}],textbookExcerpt:{text:'Like charges repel.',sources:['S1']}};
+ assert.equal(validateOutput({items:[item]},evidence,'notes').items.length,1);
+ assert.throws(()=>validateOutput({items:[{...item,keyPoints:[{text:'Claim',sources:['S99']}]}]},evidence,'notes'));
+ assert.throws(()=>validateOutput({items:[{...item,textbookExcerpt:{text:'Opposite charges repel.',sources:['S1']}}]},evidence,'notes'));
+ assert.throws(()=>validateOutput({items:[item]},evidence,'mindmap'));
+ assert.throws(()=>validateOutput({items:[item]},evidence,'roadmap'));
 });

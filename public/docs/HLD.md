@@ -1,3 +1,7 @@
+# Visual high-level design
+
+Open [interactive HLD](HLD.html) or [download SVG](HLD.svg). Use the diagrams as the primary design deliverables. Select components for responsibilities and trust boundaries.
+
 # High-Level Design
 
 ## Objective

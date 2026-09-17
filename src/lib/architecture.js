@@ -1,0 +1,42 @@
+const node=(id,x,y,w,h,title,lines,detail,color='#edf5fc')=>({id,x,y,w,h,title,lines,detail,color});
+export const designs={
+  HLD:{title:'High-level architecture',subtitle:'Document preparation, evidence retrieval and source-grounded learning',width:1200,height:790,boundaries:[{x:20,y:60,w:800,h:685,label:'STUDENT DEVICE · PRIVATE SESSION',color:'#f8fbfe'},{x:850,y:60,w:330,h:420,label:'VERCEL · SERVER TRUST BOUNDARY',color:'#f7f8f1'},{x:850,y:505,w:330,h:210,label:'EXTERNAL AI PROVIDER',color:'#fcf7ef'}],nodes:[
+    node('upload',50,115,220,100,'Upload PDF',['Class · subject · language','20 MB / 200-page limit'],'Student selects learning context and a text PDF. The original file stays on the device.'),
+    node('pdf',315,115,220,100,'PDF.js extraction',['Readable text per page','Warnings for scanned pages'],'Browser worker extracts text and preserves PDF page numbers. OCR and diagram understanding are not implemented.'),
+    node('store',580,115,210,100,'Session index',['Chunks + source metadata','Optional local vectors'],'Text, source IDs, vectors and generated results are held in this browser session. No Qdrant or persistent document database.'),
+    node('question',50,305,220,110,'Student question',['English or Tamil','AI query translation when enabled'],'A Tamil question can be translated to an English search query through the protected AI endpoint before retrieval.'),
+    node('retrieve',315,305,220,110,'Evidence retrieval',['BM25 keyword baseline','Optional E5 + rank fusion'],'Question answering retrieves up to five relevant passages. Scores are ranking values, not answer confidence.'),
+    node('batch',580,305,210,110,'Document coverage',['Every readable chunk','Bounded section batches'],'Whole-document study materials cover all readable sections instead of summarizing only top-K results.'),
+    node('api',885,115,260,100,'Protected study API',['Workspace access token','Server-side provider secret'],'Stateless Vercel endpoint validates input size, task and authentication. Keys are never exposed to the frontend.','#edf1dd'),
+    node('validate',885,320,260,110,'Validate generated output',['Structured items + source IDs','Exact textbook-quote checks'],'Rejects invalid schemas, unknown nested citations, invalid MCQs and invented textbook quotes. This does not prove every explanation is factually supported.','#edf1dd'),
+    node('llm',885,550,260,110,'Groq language model',['Evidence + teaching prompt','English / Tamil output'],'Runs only when provider credentials and a workspace token are configured. No live provider result is claimed from demo outputs.','#f8ecd5'),
+    node('output',315,570,475,130,'Student learning outputs',['Illustrated mind map · notebook roadmap','Structured notes · flashcards · quiz · answers','Source viewer · measured process · export'],'Editable code-native visuals and source-linked learning items. Without AI, only a labelled demo or source-based English preview is shown.')
+  ],edges:[['upload','pdf'],['pdf','store'],['store','retrieve'],['store','batch'],['question','retrieve'],['retrieve','api'],['batch','api'],['api','llm'],['llm','validate'],['validate','output'],['retrieve','output','preview']]},
+  LLD:{title:'Low-level component flow',subtitle:'Modules, contracts, state ownership and validation responsibilities',width:1200,height:900,boundaries:[{x:20,y:55,w:1160,h:795,label:'IMPLEMENTED MODULES · OPTIONAL AI PATH IS LABELLED',color:'#fafcfe'}],nodes:[
+    node('app',415,110,370,105,'App.jsx · state controller',['Document · language · cache · source modal','Routes tools, generation and Q&A'],'Owns the session state, clears data on document replacement, selects AI for Tamil requests, and passes structured items to rendering components.'),
+    node('pdf',55,310,310,110,'pdf.js · preparation',['Signature → pages → text → headings','Chunking + source lookup + timings'],'Preserves PDF page provenance. Limits and extraction warnings are surfaced before generation.'),
+    node('rag',445,310,310,110,'rag.js · evidence selection',['Page-aware chunks · BM25 · rank fusion','Top-K Q&A / full section batches'],'Question retrieval and whole-document generation have different coverage rules. Exact duplicate text is removed.'),
+    node('semantic',835,310,310,110,'semantic.js · optional E5',['WASM model downloaded on demand','Normalized passage/query vectors'],'Uses passage: and query: prefixes. Local vectors are fused with positive keyword matches; relevance rejection still needs calibration.'),
+    node('demo',55,530,310,110,'pedagogy + demo materials',['Concise source answer / source preview','Explicit bilingual demo fixture'],'Demo Tamil content is manually authored for the four original pages. Arbitrary PDFs are never presented as automatically translated without AI.'),
+    node('api',445,530,310,110,'api/study.js · AI contract',['Translate query / generate study items','Zod input and result validation'],'Checks token, evidence limits, feature-specific teaching structure, nested citations, exact source quotes and MCQ answer membership.'),
+    node('provider',835,530,310,110,'Groq completion',['Bounded evidence and output','Timeout · usage · measured latency'],'Provider key stays on the server. Errors do not overwrite previous cached material.'),
+    node('render',250,740,700,90,'Structured output → visual learning',['StudyGraph.jsx · StudyNotes.jsx · ArchitectureView.jsx','Source inspection · SVG/print exports · evidence timeline'],'Mind maps use named subtopics; notes have definition/key-point/formula blocks; roadmaps expose goals and self-checks; HLD/LLD are rendered diagrams.')
+  ],edges:[['app','pdf'],['app','rag'],['app','semantic'],['pdf','rag'],['rag','semantic'],['rag','api'],['rag','demo'],['api','provider'],['provider','render'],['demo','render'],['api','render']]}
+};
+const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
+export function buildArchitectureSvg(kind){
+  const d=designs[kind];const nodes=new Map(d.nodes.map(n=>[n.id,n]));
+  const rects=d.boundaries.map(b=>`<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="18" fill="${b.color}" stroke="#d7e5ef" stroke-dasharray="5 5"/><text x="${b.x+18}" y="${b.y+25}" font-size="11" font-weight="600" fill="#7893a7">${escape(b.label)}</text>`).join('');
+  const edges=d.edges.map(([a,b,type])=>{
+    const from=nodes.get(a),to=nodes.get(b);let x1,y1,x2,y2;
+    const vertical=Math.abs(from.y-to.y)>120;
+    if(vertical){x1=from.x+from.w/2;y1=from.y+(to.y>from.y?from.h:0);x2=to.x+to.w/2;y2=to.y+(to.y>from.y?0:to.h);}
+    else{x1=from.x+(to.x>from.x?from.w:0);y1=from.y+from.h/2;x2=to.x+(to.x>from.x?0:to.w);y2=to.y+to.h/2;}
+    let path=vertical?`M${x1},${y1} C${x1},${(y1+y2)/2} ${x2},${(y1+y2)/2} ${x2},${y2}`:`M${x1},${y1} C${(x1+x2)/2},${y1} ${(x1+x2)/2},${y2} ${x2},${y2}`;
+    if(kind==='HLD'&&a==='api')path='M1145,170 C1165,170 1165,540 1015,550';
+    if(kind==='HLD'&&a==='llm')path='M885,605 C862,605 860,445 915,430';
+    return `<path d="${path}" fill="none" stroke="${type?'#abbb8b':'#8faec5'}" stroke-width="2" ${type?'stroke-dasharray="5 4"':''} marker-end="url(#arch-arrow-${kind})"/>`;
+  }).join('');
+  const cards=d.nodes.map(n=>`<g data-node-id="${n.id}" role="button" tabindex="0" aria-label="Explore ${escape(n.title)}"><rect x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="12" fill="${n.color}" stroke="#bcd2e2" stroke-width="1.5"/><text x="${n.x+15}" y="${n.y+29}" font-size="16" font-weight="600" fill="#315d7b">${escape(n.title)}</text>${n.lines.map((line,i)=>`<text x="${n.x+15}" y="${n.y+53+i*20}" font-size="12" fill="#718da1">${escape(line)}</text>`).join('')}<title>${escape(n.detail)}</title></g>`).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${d.width} ${d.height}" width="${d.width}" height="${d.height}" role="group" aria-label="${escape(d.title)} diagram" font-family="Arial,sans-serif"><defs><marker id="arch-arrow-${kind}" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#8faec5"/></marker></defs><text x="30" y="30" font-size="18" font-weight="600" fill="#244c69">${kind} · ${escape(d.title)}</text>${rects}${edges}${cards}</svg>`;
+}

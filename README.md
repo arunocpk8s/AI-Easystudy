@@ -30,6 +30,15 @@ npx.cmd playwright install chromium
 npx.cmd playwright test
 ```
 
+## Graphical design and printable study slides
+
+- [Interactive HLD](public/docs/HLD.html) and [LLD](public/docs/LLD.html)
+- [HLD SVG](public/docs/HLD.svg) and [LLD SVG](public/docs/LLD.svg)
+- Notebook-style graphs and structured notes support Print / Save PDF.
+- `node scripts/capture-notebooks.js` creates demo PDFs and screenshots in `artifacts/` while the local server runs.
+
+Tamil selection automatically requests AI explanations for uploaded documents. Without server keys, setup guidance is shown. The original demo provides clearly labelled, manually authored English/Tamil materials without an AI service. AI content quality on arbitrary school PDFs still needs teacher review and live-provider evaluation.
+
 ## Documentation
 
 - [Requirements](public/docs/REQUIREMENTS.md)

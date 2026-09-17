@@ -1,3 +1,11 @@
+# Visual low-level design
+
+Open [interactive LLD](LLD.html) or [download SVG](LLD.svg). The application has the same diagram under **Visual HLD / LLD**.
+
+## Structured study outputs
+
+AI notes use evidence-linked definitions, key points, formulas, examples, exact textbook quotes and checkpoints. Mind maps require named subtopics. Roadmaps require learning goals and checkpoints. Nested source IDs are checked; quotes must match cited evidence. ID validation does not establish semantic correctness. Tamil questions are translated into English search terms before retrieval; the original question and Tamil output preference are retained for answering. Translation and answer token usage are combined.
+
 # Low-Level Design
 
 ## Modules
