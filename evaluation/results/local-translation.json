@@ -1,0 +1,7 @@
+{
+  "english": "Like charges repel. Unlike charges attract.",
+  "tamil": "மின்சார மின்சுமைகளைத் தடுக்க.\nமின்சார மின்சுமை ஈர்க்கும் போலல்லாமல்.",
+  "query": "What is a charge?",
+  "elapsedMs": 199568,
+  "scope": "Live browser WASM NLLB smoke test; not a full technical translation benchmark."
+}

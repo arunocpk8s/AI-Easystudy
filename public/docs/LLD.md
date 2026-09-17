@@ -103,3 +103,11 @@ No durable sessions, per-user identity, server quotas or distributed rate limits
 ## Reference dashboard and telemetry details
 
 Student view presents eight main cards plus revision notes and PDF Q&A. Behind the RAG shows Validate, Decode, OCR, Structure, Chunk, Embed, Index and Generate. OCR is explicitly unavailable; embedding is optional; the index is browser memory rather than Qdrant. Preparation records validation, extraction, heading structure, chunking and source-lookup construction using separate performance timers. Generation durations come from the last measured request. Model files may be browser-cached; document vectors and results remain session-memory only.
+
+## Browser-local translation
+
+No provider API key is required. English source aids → Tamil using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
+
+Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (structured provenance-safe traversal and bounded segments), `src/workers/translation.worker.js` (download, WASM translation, sequential queue and in-memory translation cache). Cache strings are cleared on document replacement/removal; model files may remain in browser cache. Model pinned to Xenova/nllb-200-distilled-600M at revision 261c31d1a5732c67cdd16d80e8d6088507c7ccea, CC-BY-NC-4.0, based on Meta NLLB-200.
+
+Physics subject mode uses a small project-authored terminology glossary for exact labels, electrical context for the ambiguous word charge, and Tamil charge/fee normalization. It does not establish sentence accuracy. Sentence-level segmentation prevents short paragraphs being silently condensed into one model output. Browser tests mock inference; live smoke outputs are recorded separately.

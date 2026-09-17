@@ -111,9 +111,15 @@ In Student view choose Mind map or Study roadmap. Click a node to open its full 
 ## Visual study workflow
 
 1. Configure GROQ_API_KEY and STUDY_ACCESS_TOKEN on the server; restart locally or redeploy on Vercel.
-2. Enter the workspace token in Settings. Select English or Tamil. Tamil uploaded-document explanations select AI automatically.
+2. Enter the workspace token in Settings. Select English or Tamil. Tamil uploaded-document source aids select local translation automatically. Explicit AI explanations remain available with configured server keys.
 3. Generate notes, mind map or roadmap. Check individual source links before trusting an explanation.
 4. Use Print / Save PDF for notebook slides or Export SVG for editable diagrams. On large documents use graph pagination to inspect every topic.
 5. Open Visual HLD / LLD, select components, and download SVG or print standalone diagrams.
 
-The bilingual original demo is manually authored. Source previews do not translate documents. Live AI reliability and Vercel deployment require actual service configuration; mock tests do not establish them.
+The bilingual original demo is manually authored. Source preview preserves language; local mode translates English source aids into Tamil. Live AI reliability and Vercel deployment require actual service configuration; mock tests do not establish them.
+
+## Browser-local translation
+
+No provider API key is required. English source aids → Tamil using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
+
+Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (structured provenance-safe traversal and bounded segments), `src/workers/translation.worker.js` (download, WASM translation, sequential queue and in-memory translation cache). Cache strings are cleared on document replacement/removal; model files may remain in browser cache. Model pinned to Xenova/nllb-200-distilled-600M at revision 261c31d1a5732c67cdd16d80e8d6088507c7ccea, CC-BY-NC-4.0, based on Meta NLLB-200.

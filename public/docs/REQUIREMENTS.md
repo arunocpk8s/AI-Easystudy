@@ -48,3 +48,9 @@ Valid IDs do not prove factual grounding. A teacher should inspect correctness, 
 ## Reference layout acceptance
 
 Student view: upload area, class/subject/language selectors, eight main tool cards, revision notes and an Ask this PDF panel. Behind the RAG: eight processing stages, measured durations, stage availability and evidence details. Graphical outputs must have actual connecting edges, readable node labels and source navigation, not only lists of cards.
+
+## Browser-local translation
+
+No provider API key is required. English source aids → Tamil using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
+
+Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (structured provenance-safe traversal and bounded segments), `src/workers/translation.worker.js` (download, WASM translation, sequential queue and in-memory translation cache). Cache strings are cleared on document replacement/removal; model files may remain in browser cache. Model pinned to Xenova/nllb-200-distilled-600M at revision 261c31d1a5732c67cdd16d80e8d6088507c7ccea, CC-BY-NC-4.0, based on Meta NLLB-200.

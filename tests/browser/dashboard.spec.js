@@ -114,7 +114,7 @@ test('Tamil question is translated for retrieval before a grounded AI response',
  await page.route('**/api/study',r=>{const input=r.request().postDataJSON();requests.push(input);return r.fulfill({json:input.feature==='translate_query'?{query:'electric charge conservation',generationMs:3,usage:{prompt_tokens:2,completion_tokens:2}}:{items:[{title:'மின்சுமை',body:'மின்சுமை அழியாது; அது நிலைபேறு உடையது.',sources:['S1']}],generationMs:5,usage:{prompt_tokens:4,completion_tokens:4}}});});
  await page.goto('/');await page.getByLabel('Upload PDF file').setInputFiles('tests/fixtures/study.pdf');await expect(page.locator('.document-strip')).toContainText('study.pdf');
  await page.getByLabel('Preferred language',{exact:true}).selectOption('Tamil');
- await page.getByRole('button',{name:'Settings',exact:true}).click();await page.getByLabel('Workspace access token').fill('test-token');await page.getByRole('button',{name:'Save for this session'}).click();
+ await page.getByRole('button',{name:'Settings',exact:true}).click();await page.getByLabel('Workspace access token').fill('test-token');await page.getByLabel('Study mode',{exact:true}).selectOption('ai');await page.getByRole('button',{name:'Save for this session'}).click();
  await page.getByRole('button',{name:'Ask this PDF',exact:true}).click();await page.getByLabel('Question',{exact:true}).fill('மின்சுமை நிலைபேறு என்றால் என்ன?');await page.getByRole('button',{name:'Find an answer'}).click();
  await expect(page.getByRole('heading',{name:'மின்சுமை',exact:true})).toBeVisible();expect(requests.map(r=>r.feature)).toEqual(['translate_query','ask']);expect(requests[1].evidence[0].text).toMatch(/charge/i);
 });

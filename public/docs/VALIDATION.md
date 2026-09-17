@@ -72,3 +72,12 @@ A mocked AI response also verified multiple-choice selection, hidden feedback be
 - Printable original demo artifacts: mind map, roadmap, four-topic notes; HLD/LLD exported as HTML, SVG and PDF. English mind map and HLD screenshots visually inspected.
 - A failing formula-preservation test identified short-sentence filtering; fixed by preserving compact mathematical statements. Architecture print pagination was corrected to a landscape diagram page.
 - Live Groq explanations and Tamil translation on arbitrary PDFs remain unverified because server secrets are absent. Vercel deployment awaits account authentication.
+
+## Local translation update
+
+- 15 Node tests passed, including structured citation/quote/formula preservation, sentence coverage, quiz consistency and scoped physics terminology.
+- 18 desktop/mobile Playwright cases passed; the four local cases passed again after original-comparison and worker lifecycle changes. Local UI uses mocked inference and asserts no cloud study requests.
+- Actual WASM NLLB English→Tamil and Tamil→English inference ran in Chromium without service keys. Final smoke elapsed ~200 seconds including ~900 MB download. Tamil query became "What is a charge?". Tamil physics statements remained grammatically/semantically weak. Raw outputs retained in evaluation/results/local-translation*.json. This is a known limitation, not an answer-quality pass.
+- Paragraph condensation observed initially; changed to sentence-by-sentence inference. Exact title glossary and electrical-charge context help terminology but do not validate sentences. Original wording is now available alongside translated outputs; source evidence remains intact.
+- Packaged production worker loaded and visibly reported an intentionally interrupted weight download. Full production inference was not repeated; real inference test used development worker.
+- HLD/LLD diagrams include the browser-local path; each architecture PDF remains one landscape page. Provider/live tutoring and Vercel deployment remain separate unverified integrations.

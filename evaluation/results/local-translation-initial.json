@@ -1,0 +1,7 @@
+{
+  "english": "Like charges repel. Unlike charges attract.",
+  "tamil": "கட்டணம் தள்ளுதல் போல.",
+  "query": "What is a charge?",
+  "elapsedMs": 160848,
+  "scope": "Live browser WASM NLLB smoke test; not a full technical translation benchmark."
+}

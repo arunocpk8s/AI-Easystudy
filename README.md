@@ -37,7 +37,7 @@ npx.cmd playwright test
 - Notebook-style graphs and structured notes support Print / Save PDF.
 - `node scripts/capture-notebooks.js` creates demo PDFs and screenshots in `artifacts/` while the local server runs.
 
-Tamil selection automatically requests AI explanations for uploaded documents. Without server keys, setup guidance is shown. The original demo provides clearly labelled, manually authored English/Tamil materials without an AI service. AI content quality on arbitrary school PDFs still needs teacher review and live-provider evaluation.
+Tamil selection uses local translation for source-mode uploaded documents. No server keys are needed. Explicit AI explanations still require server keys. The original demo provides clearly labelled, manually authored English/Tamil materials without an AI service. AI content quality on arbitrary school PDFs still needs teacher review and live-provider evaluation.
 
 ## Documentation
 
@@ -59,3 +59,22 @@ The same documents are available through Project guide in the dashboard.
 ## Vercel
 
 The Vite frontend and `api/` functions are configured in `vercel.json`. Import the repository or run `npx vercel`, configure server secrets in Vercel, deploy, then smoke-test `/api/status` and AI generation. `vite preview` serves static assets only; it is not the API runtime. See the runbook for precise steps and the deployment status.
+
+## Local Tamil translation — no API key
+
+1. Upload an English text PDF and select **Tamil**.
+2. Choose a study tool. Source mode automatically uses **Local translation — no API key**. You can also select this mode in Settings or Study studio.
+3. Keep the tab open while the first model download completes (about 895 MB of q8 weights, plus tokenizer/runtime files). Progress shows each file and each translated passage. A laptop with sufficient RAM is recommended; download and generation can take minutes.
+4. Inspect page citations. Formulas and original textbook quotations stay unchanged; notes, graph labels, questions and answers are translated locally.
+5. For Q&A, Tamil questions are translated to English locally, then relevant English passages are retrieved and a source-based answer is translated to Tamil. No Groq request is made.
+6. Use **Cancel translation** if needed; select English to continue with source preview. Retry downloads may reuse browser-cached files.
+
+The downloadable model is still AI, but runs on your device without a paid API. This mode translates source aids; it does not generate new tutoring explanations or solve questions beyond retrieved evidence. Currently intended for English PDFs and English/Tamil questions; other source languages are unsupported. Browser caching depends on storage availability/eviction, and the webpage is not a full offline PWA.
+
+Model: [Xenova NLLB-200 distilled 600M](https://huggingface.co/Xenova/nllb-200-distilled-600M), pinned revision 261c31d1a5732c67cdd16d80e8d6088507c7ccea. Base model by Meta AI, CC-BY-NC-4.0 (educational/non-commercial use). Runtime: [Transformers.js](https://huggingface.co/docs/transformers.js/tutorials/react), WASM in a dedicated worker.
+
+A real-model smoke check is available via `node scripts/smoke-local-translation.js` while the development server runs. It downloads model files; it is separate from lightweight mocked UI tests.
+
+Physics subject mode uses a small project-authored terminology glossary for exact labels, electrical context for the ambiguous word charge, and Tamil charge/fee normalization. It does not establish sentence accuracy. Sentence-level segmentation prevents short paragraphs being silently condensed into one model output. Browser tests mock inference; live smoke outputs are recorded separately.
+
+Live smoke testing confirmed local inference and Tamil→English queries, but found incorrect physics sentence wording even after segmentation/terminology assistance. Local translations therefore show original wording alongside notes, revealed flashcards, submitted quiz feedback, answers and graph inspectors. Treat this feature as experimental translation assistance; it is not validated Tamil tutoring. Reports preserve the observed errors rather than claiming language accuracy from unit/UI tests.
