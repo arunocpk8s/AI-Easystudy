@@ -103,3 +103,7 @@ Do not put provider secrets in frontend build variables. The workspace token is 
 ## 9. Recovery and rollback
 
 Use Git history to identify the last passing source state. Redeploy that state or restore a known-good Vercel deployment through the provider. Keep secrets configured separately. A failed generation does not replace previously cached material. Removing a document clears local artifacts; no server document database exists to restore.
+
+## Graphical study tools
+
+In Student view choose Mind map or Study roadmap. Click a node to open its full text and source buttons. Use zoom controls and scroll the canvas. More than six topics are paginated; no topics are silently discarded. Export SVG saves the displayed diagram page, while the general Markdown export saves all study items. In the roadmap, Mark as reviewed tracks progress for this session. Class, subject and language choices guide generation; they do not verify syllabus alignment. The Behind the RAG tab distinguishes measured work from optional embedding and unavailable OCR.

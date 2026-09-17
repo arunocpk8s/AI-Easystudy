@@ -1,6 +1,6 @@
 # Study Atlas
 
-A PDF-based study dashboard for Class 11/12 students and other learners. Upload a text PDF, create nine study aids, inspect source passages, and visualize the processing stages and timings.
+A PDF-based study dashboard for Class 11/12 students and other learners. Use Student view to upload a text PDF and create nine study aids, including connected graphical mind maps and roadmaps. Use Behind the RAG to inspect evidence and measured processing stages. Graphs support zoom, source inspection and SVG export.
 
 ## Quick start
 

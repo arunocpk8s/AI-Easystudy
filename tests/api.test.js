@@ -23,3 +23,11 @@ test('API checks configuration, token, input, and validates provider output',asy
     res=response();await handleStudy(req,res,async()=>({ok:true,json:async()=>({choices:[{message:{content:'invalid'}}]})}));assert.equal(res.statusCode,502);
   }finally{if(oldKey===undefined)delete process.env.GROQ_API_KEY;else process.env.GROQ_API_KEY=oldKey;if(oldToken===undefined)delete process.env.STUDY_ACCESS_TOKEN;else process.env.STUDY_ACCESS_TOKEN=oldToken;}
 });
+
+
+test('multiple-choice output must have unique options and a matching answer',()=>{
+  const item={title:'What do like charges do?',body:'Like charges repel.',sources:['S1'],options:['Repel','Attract','Disappear','Lose charge'],answer:'Repel'};
+  assert.equal(validateOutput({items:[item]},evidence,'quiz').items[0].options.length,4);
+  assert.throws(()=>validateOutput({items:[{...item,answer:'Invalid'}]},evidence,'quiz'));
+  assert.throws(()=>validateOutput({items:[{...item,options:['Repel','Repel']}]},evidence,'quiz'));
+});

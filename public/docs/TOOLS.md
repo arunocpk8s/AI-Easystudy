@@ -4,7 +4,8 @@
 
 | Tool | Use | Why |
 |---|---|---|
-| React | Dashboard, document/session state, study tools | Component-based responsive UI |
+| React | Two-view dashboard, document/session state, study tools | Component-based responsive UI |
+| Native SVG | Connected mind maps and roadmaps with export | Code-native graphical output, no image generation or graph service needed |
 | Vite | Dev server and production assets | Suitable for Vercel static frontend |
 | PDF.js | Local extraction with page references | Official Mozilla PDF processing library |
 | Transformers.js | Optional multilingual embeddings | Browser-local semantic retrieval |

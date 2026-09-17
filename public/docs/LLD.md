@@ -4,7 +4,10 @@
 
 | Module | Responsibility |
 |---|---|
-| `src/App.jsx` | Views, session state, uploads, generation batches, Q&A, source modal, quiz, exports |
+| `src/App.jsx` | Two main views, session state, uploads, generation batches, Q&A, source modal, quiz, exports |
+| `src/components/StudentDashboard.jsx` | Reference-style tool grid, upload, class/subject/language choices |
+| `src/components/RagPipeline.jsx` | Eight-stage preparation/generation visualization with measured or unavailable statuses |
+| `src/components/StudyGraph.jsx` | Connected SVG mind map and roadmap, zoom, source inspector, pagination, SVG export, review state |
 | `src/lib/pdf.js` | PDF header/size/page checks, PDF.js worker, extraction warnings, page metadata |
 | `src/lib/rag.js` | Tokenization, chunking, BM25, rank fusion, exact duplicate removal, section batches |
 | `src/lib/semantic.js` | Lazy multilingual feature-extraction pipeline and normalized vectors |
@@ -18,12 +21,12 @@
 ```text
 Page = { page: positive integer, text: string }
 Chunk = { id: S<number>, page: positive integer, title: string, text: string }
-StudyItem = { title: string, body: string, sources: source ID[], answer?: string }
+StudyItem = { title: string, body: string, sources: source ID[], answer?: string, options?: string[] }
 Trace = { kind, mode, stages: {name, ms, detail}[], evidence: Chunk[], usage? }
 Document = { name, pages, chunks, warnings, parsingMs, chunkingMs, demo? }
 ```
 
-State is browser memory only. Replacing/removing a document clears results, vectors, evidence, responses and the previous PDF object URL. Material cache keys contain feature, generation mode and language; all material state is reset on document replacement. The embedding pipeline may remain loaded across documents, but document vectors are cleared.
+State is browser memory only. Replacing/removing a document clears results, vectors, evidence, responses and the previous PDF object URL. Material cache keys contain feature, generation mode, language, class and subject; all material state is reset on document replacement. The embedding pipeline may remain loaded across documents, but document vectors are cleared.
 
 ## Chunking and ranking
 
@@ -75,11 +78,11 @@ Errors: 400 invalid contract; 401 bad token; 405 wrong method; 413 oversized evi
 
 ## Generation and UI
 
-Feature-specific instructions request grounded notes, mind-map branches, flashcards, short-answer quizzes, revision points and roadmaps. The prompt prohibits official exam predictions and treats PDF instructions as untrusted data. This reduces risk but does not guarantee immunity to prompt injection.
+Feature-specific instructions request grounded notes, mind-map branches, flashcards, short-answer quizzes, revision points and roadmaps. Class/subject are user-selected generation context, not automatic document classification or multi-document filters. Practice question prompts request suggested 1/2/3/5-mark formats rather than an official marking scheme. The prompt prohibits official exam predictions and treats PDF instructions as untrusted data. This reduces risk but does not guarantee immunity to prompt injection.
 
 Extractive mode uses source sentences. Flashcards reveal excerpts; quizzes mask one source word and use self-check. Confusion prompts are explicitly generic review prompts. Roadmaps follow document order. AI outputs are reviewed by users rather than automatically fact-checked.
 
-Mind-map implementation: document root plus topic branches and body text. It is a hierarchical visual, not a draggable graph or full semantic dependency network. Quiz self-assessment avoids unreliable exact-string grading.
+Mind-map implementation: connected SVG document root → topic branches → up to two source-linked evidence snippets per topic. Repeated topic titles are grouped without losing sources. The roadmap uses a connected document-order step diagram with a per-session reviewed state. Graphs show six topics per page with previous/next controls, zoom, keyboard-selectable nodes, a full-text source inspector and SVG export. The diagram is scrollable rather than draggable. No verified prerequisite dependency network is inferred. Quiz self-assessment avoids unreliable exact-string grading. AI quizzes may include multiple-choice options; choices must be distinct and the answer must exactly match one option. Extractive quizzes remain cloze questions.
 
 ## Telemetry
 
@@ -88,3 +91,7 @@ Use `performance.now()` for local durations and server generation elapsed time. 
 ## Known engineering constraints
 
 No durable sessions, per-user identity, server quotas or distributed rate limits. API access token is a private-workspace MVP gate. Readiness for public deployment requires additional authentication, abuse controls, a retention policy, production observability and content evaluation.
+
+## Reference dashboard and telemetry details
+
+Student view presents eight main cards plus revision notes and PDF Q&A. Behind the RAG shows Validate, Decode, OCR, Structure, Chunk, Embed, Index and Generate. OCR is explicitly unavailable; embedding is optional; the index is browser memory rather than Qdrant. Preparation records validation, extraction, heading structure, chunking and source-lookup construction using separate performance timers. Generation durations come from the last measured request. Model files may be browser-cached; document vectors and results remain session-memory only.

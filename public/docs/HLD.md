@@ -64,3 +64,7 @@ AI evidence is transmitted to Vercel and Groq. Optional semantic setup downloads
 ## Future enterprise evolution
 
 Add identity, tenant-scoped storage, object storage, ingestion jobs, OCR, Qdrant with tenant/document filters, reranking, provider budgets, rate limits, retention controls and broader teacher-reviewed evaluation. These are planned changes, not current features.
+
+## Student and process dashboards
+
+The reference-led UI has Student view and Behind the RAG tabs. The student chooses class, subject and preferred language, uploads a PDF and selects a study tool. Mind maps and roadmaps render native SVG nodes and explicit connections, with source inspection and export. The process dashboard displays eight stages, actual measurements where recorded, and honest optional/unavailable statuses. OCR and Qdrant are not depicted as running services in the current implementation.

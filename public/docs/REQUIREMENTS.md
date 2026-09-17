@@ -15,13 +15,13 @@ MVP accepts printed, text-based PDFs of up to 20 MB and 200 pages. English extra
 | FR01 | Upload and extract PDF locally | Two-page fixture produces readable, page-linked passages |
 | FR02 | Preserve page provenance | Every chunk has an ID and PDF page |
 | FR03 | Create short notes and topic summaries | Items link to supplied evidence; AI and extractive labels differ |
-| FR04 | Create a mind map | Document root and topic branches display supporting source buttons |
+| FR04 | Create a mind map | Connected document/topic/idea nodes support zoom, SVG export and source inspection |
 | FR05 | Create flashcards | Answers are hidden until revealed |
 | FR06 | Create practice question types | Generated practice is not called official exam prediction |
 | FR07 | Highlight potential confusion points | Inference is labelled; teacher validation is required |
-| FR08 | Create short-answer/cloze quizzes | Answers appear only after checking; grading is self-assessment |
+| FR08 | Create short-answer/MCQ/cloze quizzes | Answers appear only after checking; grading is self-assessment |
 | FR09 | Create revision notes | Selected essential passages remain traceable |
-| FR10 | Create document roadmap | No claim of full subject coverage from one document |
+| FR10 | Create document roadmap | Connected step diagram supports reviewed state; no claim of full subject coverage or verified prerequisites |
 | FR11 | Answer questions | Retrieve passages; AI uses evidence; keyword misses show insufficient evidence |
 | FR12 | Inspect sources | Passage preview and original PDF link target the PDF page |
 | FR13 | Visualize execution | Show actual stages, evidence and measured durations |
@@ -44,3 +44,7 @@ MVP accepts printed, text-based PDFs of up to 20 MB and 200 pages. English extra
 ## Validation boundary
 
 Valid IDs do not prove factual grounding. A teacher should inspect correctness, supported claims, scientific units, formula extraction, Tamil translation and topic coverage. The current golden fixture measures English keyword retrieval only.
+
+## Reference layout acceptance
+
+Student view: upload area, class/subject/language selectors, eight main tool cards, revision notes and an Ask this PDF panel. Behind the RAG: eight processing stages, measured durations, stage availability and evidence details. Graphical outputs must have actual connecting edges, readable node labels and source navigation, not only lists of cards.

@@ -2,8 +2,8 @@
 
 ## Executed checks
 
-- Node pipeline/API tests: **7 passed**. Checks page provenance, chunk coverage, retrieval, zero-match fusion, extractive references, model output contracts, token protection and provider failures.
-- Playwright: **6 passed**, three workflows each on desktop and mobile. Covers real PDF extraction, material generation, source preview, quiz answers, flashcards, mind map, Markdown export, deletion and missing keyword evidence.
+- Node pipeline/API tests: **8 passed**. Checks page provenance, chunk coverage, retrieval, zero-match fusion, extractive references, model output contracts, token protection and provider failures.
+- Playwright: **10 passed**, five workflows each on desktop and mobile. Covers real PDF extraction, material generation, source preview, quiz answers, flashcards, mind map, Markdown export, deletion and missing keyword evidence.
 - Production build: passed on Node 24.20.0.
 - Dependency audit after updating PDF.js and Transformers.js: **0 known vulnerabilities**.
 - Repository Skill validation: passed. Skill-creator validator needed PyYAML, installed in an ignored project-local temporary folder.
@@ -58,3 +58,8 @@ Live Groq generation, AI Tamil accuracy, AI answer grounding, OCR, diagrams, per
 ## Deployment status
 
 Vercel-ready configuration is present. Vercel MCP was found but is not connected. No live Vercel URL was produced. Configure the Groq server key and workspace access token for AI mode; connect Vercel or authenticate its CLI for deployment.
+## Reference UI improvement review
+
+Replaced the sidebar overview with Student view and Behind the RAG tabs matching the supplied reference structure. Added class/subject/language controls. Mind maps and roadmaps now use connected SVG nodes with zoom, paginated coverage, source inspection and export. Roadmaps support local reviewed state. New browser checks verify these on desktop/mobile, including keyboard Escape from source dialogs. Selector accessible names were corrected after the first new test run. AI MCQ options and answers are schema-validated; live generation is still unverified without credentials. PDF preparation has separate measured validation, decode, structure, chunk and source-lookup timings. The dashboard does not claim OCR, Qdrant or fixed processing-time estimates.
+
+A mocked AI response also verified multiple-choice selection, hidden feedback before submission, and forwarding of class/subject context. This validates UI behavior, not live provider quality.
