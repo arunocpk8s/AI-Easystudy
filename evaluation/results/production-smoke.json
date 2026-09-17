@@ -1,0 +1,17 @@
+{
+  "url": "https://ai-easystudy.vercel.app",
+  "checkedAt": "2026-09-17T18:27:06.700Z",
+  "checks": [
+    "Public homepage accessible without authentication",
+    "Cloud AI accurately reports unconfigured",
+    "Unconfigured cloud endpoint refuses generation",
+    "Four demo flashcards reveal vector illustrations",
+    "Four-option MCQ quiz scores answers",
+    "Real PDF extraction and evidence search work in production",
+    "Interactive graphical HLD and LLD render",
+    "Exported architecture and runbook are accessible",
+    "Mobile dashboard fits viewport"
+  ],
+  "aiConfigured": false,
+  "scope": "Public Chromium smoke test with real PDF extraction; cloud AI and full production translation inference are not tested."
+}

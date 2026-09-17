@@ -98,3 +98,10 @@ Normal-size topic-reader screenshot visually reviewed; definitions, formulas, se
 - 28 desktop/mobile browser cases passed: diagram reveal, individual second-card SVG download, reveal-all, four-option MCQs, score/feedback, source links, Hindi local content and Hindi query translation before retrieval. Hindi browser inference is mocked; it does not establish language quality.
 - Production build and original English keyword retrieval evaluation passed. Cloud live Hindi generation is not tested without provider keys.
 - GitHub MCP fetched the user-supplied AI-Easystudy repository and confirmed it was empty with push permission. Vercel CLI account authentication succeeded. Deployment status will be recorded separately after public checks.
+
+
+## Public production verification — 17 September 2026
+
+The public deployment at https://ai-easystudy.vercel.app passed an unauthenticated Chromium smoke test: homepage, three language choices, four visual demo flashcards, four-option MCQ scoring, real fixture PDF extraction and evidence search, interactive graphical HLD/LLD, exported architecture/runbook, and mobile width. `/api/status` correctly reports cloud AI disabled and `/api/study` returns 503 without provider configuration. GitHub is connected to Vercel for subsequent deployments. See `evaluation/results/production-smoke.json`.
+
+A real local Hindi WASM smoke test translated a basic English sentence into Hindi and a Hindi question into English, taking 194 seconds including initial loading. See `evaluation/results/local-translation-hindi.json`. This does not establish full physics translation quality or full production-worker inference. Existing release checks: 18 unit tests and 28 desktop/mobile browser tests passed; the small original English golden dataset achieved 8/8 answerable retrieval hits.

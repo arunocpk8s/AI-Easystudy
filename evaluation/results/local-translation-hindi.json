@@ -1,0 +1,9 @@
+{
+  "english": "Electric charge is a property of matter.",
+  "target": "Hindi",
+  "translation": "विद्युत चार्ज पदार्थ की एक विशेषता है।",
+  "sourceQuery": "विद्युत आवेश क्या है?",
+  "query": "What is electric charge?",
+  "elapsedMs": 194289,
+  "scope": "Live browser WASM NLLB smoke test; not a full technical translation benchmark."
+}

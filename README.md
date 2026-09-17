@@ -1,3 +1,5 @@
+Live application: [AI EasyStudy](https://ai-easystudy.vercel.app) | [GitHub repository](https://github.com/arunocpk8s/AI-Easystudy)
+
 # Study Atlas
 
 A PDF-based study dashboard for Class 11/12 students and other learners. Use Student view to upload a text PDF and create nine study aids, including connected graphical mind maps and roadmaps. Use Behind the RAG to inspect evidence and measured processing stages. Graphs support zoom, source inspection and SVG export.
