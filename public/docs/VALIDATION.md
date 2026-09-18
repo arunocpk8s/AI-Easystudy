@@ -126,3 +126,7 @@ OCR errors were observed in Tamil/Hindi. Using the selected script's model inste
 
 
 OCR integration also exposed a source-aid heading heuristic that could delete a first sentence when it was used as a page title. It now removes only standalone headings, retains full-sentence titles as evidence, and keeps short essential source facts. A regression test covers this across notes as well as OCR provenance.
+
+## Professional short notes — 18 September 2026
+
+Short notes now use professional sans-serif headings and body text, a clean white page, stronger text contrast, readable source references, and clearly separated concept/formula/example/revision sections. Existing Tamil/Hindi script fonts and original source links remain available. All 28 relevant desktop/mobile dashboard, translation and OCR browser checks passed; the production build passed. A browser capture verified normal typography and mobile width, and exported the printable notes. See `artifacts/professional-short-notes.png` and `artifacts/notebook-notes.pdf`. This is a presentation change and does not establish new model/content accuracy.

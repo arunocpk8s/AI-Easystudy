@@ -33,3 +33,31 @@
 
 .ocr-preferences{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 20px;margin:6px auto 18px;max-width:740px;color:#526b7c}.ocr-preferences label{display:flex;align-items:center;gap:8px;font-size:12px}.ocr-toggle input{accent-color:#305c83;width:16px;height:16px}.ocr-preferences select{border:1px solid #d5e1eb;border-radius:7px;padding:7px 10px;background:#fff;color:#36576b}.ocr-preferences>small{flex-basis:100%;font-size:11px;line-height:1.6;color:#758994}.reading-summary .ocr-note{background:#edf5ff;border-radius:8px;padding:10px 14px;color:#3d5e7c}
 @media(max-width:600px){.ocr-preferences{display:grid;justify-content:start;text-align:left}.ocr-preferences label{font-size:11px;flex-wrap:wrap}}
+/* Professional study notes: clear hierarchy, accessible text and clean print layout. */
+.notebook-notes{font-family:'DM Sans','Noto Sans Tamil','Noto Sans Devanagari',Arial,sans-serif;border-color:#dbe3ec;background:#fff;border-radius:14px}
+.notebook-notes .notebook-header{background:#f5f8fc;text-align:left;padding:28px 32px;border-bottom:1px solid #dbe3ec}
+.notebook-notes .notebook-header>span{font-size:11px;font-weight:600;letter-spacing:1px;color:#52677e}
+.notebook-notes .notebook-header h2{font-family:inherit!important;font-size:28px;font-weight:700;line-height:1.4;color:#20364d;margin:10px 0 8px;overflow-wrap:anywhere}
+.notebook-notes .notebook-header p{font-size:14px;color:#52677e}
+.notebook-notes .notebook-page{padding:28px 32px;background:#fff;background-image:none;border-color:#e0e7ef}
+.notebook-notes .notebook-page:before{display:none}
+.notebook-notes .page-topic{align-items:flex-start;gap:14px;margin-bottom:24px}
+.notebook-notes .page-topic>span{font-family:inherit;font-size:13px;font-weight:700;color:#315777;background:#eaf1f8;border-radius:7px;padding:7px 10px;line-height:1.5}
+.notebook-notes .page-topic h3{font-family:inherit!important;font-size:22px;font-weight:650;line-height:1.5;color:#20364d;background:none;padding:0;overflow-wrap:anywhere}
+.notebook-notes .note-columns{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:24px}
+.notebook-notes .note-callout{border-color:#dbe3ec;border-radius:9px;box-shadow:none;padding:18px;background:#f8fafc;margin-bottom:18px}
+.notebook-notes .note-callout h4,.notebook-notes .note-points h4{font-family:inherit!important;font-size:14px;font-weight:700;line-height:1.6;color:#294661;margin-bottom:10px}
+.notebook-notes .note-callout h4 svg{flex-shrink:0}
+.notebook-notes .note-callout p,.notebook-notes .note-body,.notebook-notes .note-points li{font-size:15px;line-height:1.85;color:#34495e}
+.notebook-notes .note-callout.concept{background:#f1f7fc;border-color:#d6e5f2}
+.notebook-notes .note-callout.formula{background:#fff9ee;border-color:#eadfbd}
+.notebook-notes .note-callout.formula p{font-size:16px;color:#4d422c}
+.notebook-notes .note-callout.example{background:#f2f8f5;border-color:#d7e7df}
+.notebook-notes .note-callout.confusion{background:#fff5f2;border-color:#eedbd3}
+.notebook-notes .note-callout.checkpoint{background:#f5f4fb;border-color:#e0ddef}
+.notebook-notes .note-callout.excerpt p{font-style:normal;font-size:14px;color:#43566a}
+.notebook-notes .note-points{padding:0 0 16px}
+.notebook-notes .note-points li{margin:0 0 14px;padding-left:4px}
+.notebook-notes .notebook-page .source-links button{font-size:11px;padding:5px 8px;background:#fff;border:1px solid #dbe3ec;color:#365776}
+@media(max-width:700px){.notebook-notes .notebook-header,.notebook-notes .notebook-page{padding:22px 18px}.notebook-notes .notebook-header h2{font-size:24px}.notebook-notes .page-topic h3{font-size:20px}.notebook-notes .note-columns{grid-template-columns:minmax(0,1fr);gap:0}.notebook-notes .note-callout{padding:16px}}
+@media print{.notebook-notes .notebook-header{padding:12px;background:#fff}.notebook-notes .notebook-page{padding:16px 0}.notebook-notes .note-columns{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}.notebook-notes .note-callout{break-inside:avoid}.notebook-notes .notebook-page .source-links button{border:0}}
