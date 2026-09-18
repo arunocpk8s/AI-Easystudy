@@ -5,9 +5,9 @@ export function chunkPages(pages, size = 150, overlap = 25) {
   if (size <= overlap || overlap < 0) throw new Error('Chunk size must exceed overlap.');
   const chunks = [];
   for (const {page, text, title} of pages) {
-    const words = text.trim().split(/\s+/).filter(Boolean);
+    const words = [...text.matchAll(/\S+/g)];
     for (let start = 0; start < words.length; start += size - overlap) {
-      chunks.push({id:`S${chunks.length + 1}`,page,text:words.slice(start,start+size).join(' '),title:title||detectTitle(text, page)});
+      chunks.push({id:`S${chunks.length + 1}`,page,text:text.slice(words[start].index,words[Math.min(start+size,words.length)-1].index+words[Math.min(start+size,words.length)-1][0].length),title:title||detectTitle(text, page)});
       if (start + size >= words.length) break;
     }
   }

@@ -2,7 +2,7 @@
   "answerableHitAt1": 1,
   "answerableHitAt3": 1,
   "unsupportedNoMatchRate": 1,
-  "date": "2026-09-17T18:20:30.603Z",
+  "date": "2026-09-18T01:29:52.232Z",
   "scope": "English keyword retrieval on original four-page demo fixture. Not a textbook or AI quality benchmark.",
   "total": 10,
   "hitAt3": 1,
@@ -19,7 +19,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 3.031399999999998
+      "latencyMs": 1.5683000000000042
     },
     {
       "id": "g02",
@@ -32,7 +32,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.3319000000000045
+      "latencyMs": 0.1524999999999963
     },
     {
       "id": "g03",
@@ -45,7 +45,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.2043999999999997
+      "latencyMs": 0.130199999999995
     },
     {
       "id": "g04",
@@ -58,7 +58,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.18710000000000093
+      "latencyMs": 0.11110000000000042
     },
     {
       "id": "g05",
@@ -71,7 +71,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.20069999999999766
+      "latencyMs": 0.08460000000000178
     },
     {
       "id": "g06",
@@ -83,7 +83,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.1390000000000029
+      "latencyMs": 0.08570000000000277
     },
     {
       "id": "g07",
@@ -94,7 +94,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.14930000000000376
+      "latencyMs": 0.07779999999999632
     },
     {
       "id": "g08",
@@ -107,7 +107,7 @@
       ],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.21459999999999724
+      "latencyMs": 0.10139999999999816
     },
     {
       "id": "g09",
@@ -116,7 +116,7 @@
       "retrievedPages": [],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 0.1144999999999996
+      "latencyMs": 0.8352000000000004
     },
     {
       "id": "g10",
@@ -125,7 +125,7 @@
       "retrievedPages": [],
       "hit": true,
       "hitAt1": true,
-      "latencyMs": 1.001100000000001
+      "latencyMs": 0.11730000000000018
     }
   ]
 }

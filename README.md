@@ -92,3 +92,6 @@ Every quiz has four-option MCQs. Demo questions are manually authored conceptual
 Repository: https://github.com/arunocpk8s/AI-Easystudy
 
 Build with `npm.cmd run build`. Deploy using `npx.cmd vercel --prod --yes`, or import the GitHub repository into Vercel with the Vite preset. Local translation needs no server secret; optional cloud explanations require GROQ_API_KEY and STUDY_ACCESS_TOKEN set in Vercel project settings.
+
+
+Mind maps and roadmaps now use professional fonts, concise concept labels, and content-aware node heights. Choose a diagram node or **Topic essentials** to read only that topic's necessary points; full-book text is no longer repeated beneath the diagrams. Source mode selects up to three complete facts per topic without cloud calls. Optional Groq mode uses stricter concise graph prompts and output validation; it still needs server credentials.

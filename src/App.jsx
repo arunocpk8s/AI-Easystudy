@@ -14,6 +14,7 @@ import StudyNotes from './components/StudyNotes.jsx';
 import DocumentReadingSummary from './components/DocumentReadingSummary.jsx';
 import ArchitectureView from './components/ArchitectureView.jsx';
 import {demoMaterials} from './lib/demo-materials.js';
+import {sourceGraphMaterials} from './lib/graph-content.js';
 import {structuredPreview,sourceAnswer} from './lib/pedagogy.js';
 import {translateLocalText,cancelLocalTranslation,clearTranslationCache} from './lib/translation.js';
 import {translateStudyItems} from './lib/translation-core.js';
@@ -93,7 +94,7 @@ export default function App(){
           const data=await aiRequest(id,batches[i]);items.push(...data.items);generationMs+=data.generationMs;
           usage.prompt_tokens+=data.usage?.prompt_tokens||0;usage.completion_tokens+=data.usage?.completion_tokens||0;
         }
-      }else{items=doc.demo?demoMaterials(doc.chunks,id,effectiveMode==='local'?'English':language):['notes','summary','revision','mindmap','roadmap'].includes(id)?structuredPreview(doc.chunks,id):extractiveMaterials(doc.chunks,id);generationMs=performance.now()-generationStart;}
+      }else{items=doc.demo?demoMaterials(doc.chunks,id,effectiveMode==='local'?'English':language):['mindmap','roadmap'].includes(id)?sourceGraphMaterials(doc.chunks,id):['notes','summary','revision'].includes(id)?structuredPreview(doc.chunks,id):extractiveMaterials(doc.chunks,id);generationMs=performance.now()-generationStart;}
       if(effectiveMode==='local'&&language!=='English'){const t=performance.now();items=await translateStudyItems(items,text=>translateLocalText(text,'English',language,setProgress,subject));localTranslationMs=performance.now()-t;}
       if(!items.length)throw new Error('Not enough suitable source text to create this material. For MCQs, upload a passage with several distinct terms.');
       const nextTrace={kind:'Study material generation',mode:effectiveMode==='local'?'Browser-local translation · source-based study aids':effectiveMode==='ai'?'AI · structured teaching outputs':doc.demo?'Bilingual demo · manually authored':'Source-based English preview',stages:[{name:'Select document evidence',ms:selectionMs,detail:`All ${count} chunks considered; quiz practice is capped in extractive mode`},{name:'Generate material',ms:generationMs,detail:effectiveMode==='ai'?`${sectionEvidence(doc.chunks).length} model calls`:'No model calls'},{name:'Local translation',ms:localTranslationMs,detail:localTranslationMs?'On-device model; initial download included when needed':'Not needed'},{name:'Total request',ms:performance.now()-started,detail:'Measured wall-clock time'}],evidence:doc.chunks,usage:effectiveMode==='ai'?usage:null};

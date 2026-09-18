@@ -31,3 +31,7 @@ test('all extractive tools preserve valid references; quizzes have four unique o
   for(const feature of FEATURES){const items=extractiveMaterials(chunks,feature.id);assert.ok(items.length);assert.ok(items.every(i=>i.sources.every(s=>ids.has(s))));}
   assert.ok(extractiveMaterials(chunks,'quiz').every(i=>i.options.length===4&&new Set(i.options).size===4&&i.options.includes(i.answer)));
 });
+
+test('chunking retains source line boundaries so headings do not become sentence prefixes',()=>{
+ const [chunk]=chunkPages([{page:1,text:'ELECTRIC FIELD\nField and force\nElectric field is force per charge.'}]);assert.ok(chunk.text.includes('\nField and force\n'));
+});

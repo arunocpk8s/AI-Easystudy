@@ -60,3 +60,8 @@ Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (str
 Visual flashcards use source-linked code-native SVG concept diagrams with reveal controls, individual SVG image downloads and printing. MCQ quizzes require four unique options and one matching answer in every mode. Source-only MCQs are exact-wording recall questions (maximum 10), not inferred conceptual exam questions. Conceptual demo MCQs are manually authored; cloud MCQs depend on model grounding. Selected options are scored after submission; explanation and evidence remain visible.
 
 Hindi is available alongside English and Tamil. Local Hindi uses hin_Deva in the existing NLLB model; Hindi questions are translated to English before retrieval. Cloud input accepts Hindi and requests Hindi explanations. Original quotes, formulas and citations stay unchanged. When option translations collapse to identical words, original option labels disambiguate them and the correct answer follows its original option index.
+
+
+## Focused graph acceptance
+
+Mind maps and roadmaps use professional sans-serif fonts. Graphs show concise concepts and necessary facts rather than paragraph labels. Source-based selection considers all chunks but displays only up to three essential facts per topic; this is not complete chapter coverage. Only a selected topic's essentials appear beneath the diagram; full textbook passages open through citations. Diagrams fit the normal page, preserve source links, and resize nodes to avoid clipping.
