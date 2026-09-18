@@ -22,5 +22,5 @@ export function createOcrSession({language='English',signal,onProgress=()=>{}}={
   }
   try{return await waitForOcr(loading,{signal});}catch(error){close();throw error;}
  }
- return {async recognize(canvas,page){currentPage=page;const active=await load();try{const result=await waitForOcr(active.recognize(canvas),{signal,timeoutMs:90000});return result.data;}catch(error){close();throw error;}},close};
+ return {async recognize(canvas,page){currentPage=page;const active=await load();try{const result=await waitForOcr(active.recognize(canvas,{rotateAuto:true},{blocks:true}),{signal,timeoutMs:90000});return result.data;}catch(error){close();throw error;}},close};
 }

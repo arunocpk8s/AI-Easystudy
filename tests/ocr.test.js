@@ -17,3 +17,15 @@ test('OCR startup captures the native worker and restores the constructor even o
  const previous=globalThis.Worker;class FakeWorker{terminate(){this.closed=true;}};globalThis.Worker=FakeWorker;let captured;
  try{const worker=captureOcrWorker(()=>new globalThis.Worker('ocr'),w=>{captured=w;});assert.equal(worker,captured);assert.equal(globalThis.Worker,FakeWorker);captured.terminate();assert.equal(captured.closed,true);assert.throws(()=>captureOcrWorker(()=>{throw new Error('startup');},()=>{}),/startup/);assert.equal(globalThis.Worker,FakeWorker);}finally{globalThis.Worker=previous;}
 });
+
+import {ocrImageDimensions} from '../src/lib/ocr-quality.js';
+test('OCR rejects symbol noise, wrong scripts, unreadable English runs and low word scores',()=>{
+ const cases=[{text:'xqz brrr zxcv plkq',confidence:90},{text:'Hello ### $$$ @@@ planet',confidence:90},{text:'Hello world replacement � characters',confidence:90},{text:'Like charges repel. Unlike charges attract.',confidence:60}];
+ const words=['Like','charges','repel','Unlike','charges'].map(text=>({text,confidence:20}));
+ cases.push({text:'Like charges repel. Unlike charges attract.',confidence:90,blocks:[{paragraphs:[{lines:[{words}]}]}]});
+ for(const data of cases)assert.equal(assessOcr(data,{language:'English'}).accepted,false);
+ assert.equal(assessOcr({text:'மின்சுமை என்பது பொருளின் ஒரு பண்பு.',confidence:90},{language:'English'}).accepted,false);
+ assert.equal(assessOcr({text:'மின்சுமை என்பது பொருளின் ஒரு பண்பு.',confidence:90},{language:'Tamil'}).accepted,true);
+ assert.equal(assessOcr({text:'विद्युत आवेश पदार्थ का एक गुण है।',confidence:90},{language:'Hindi'}).accepted,true);
+});
+test('image preparation enlarges small text without exceeding dimension and pixel budgets',()=>{assert.deepEqual(ocrImageDimensions(600,200),{width:1200,height:400});assert.deepEqual(ocrImageDimensions(1200,500),{width:1200,height:500});const photo=ocrImageDimensions(4000,6000);assert.equal(photo.height,3600);assert.ok(photo.width*photo.height<=10000000);const square=ocrImageDimensions(6000,6000);assert.ok(square.width*square.height<=10000000);});

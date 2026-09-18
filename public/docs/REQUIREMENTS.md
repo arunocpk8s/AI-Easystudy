@@ -81,9 +81,18 @@ Image-only pages support browser-local printed-text OCR in English, Tamil and Hi
 | XLS / XLSX / CSV / TSV | SheetJS 0.20.3; named sheets and row text | 200 sheets, 100,000 cells per sheet; stored formula values only; no macro execution |
 | PPTX | ZIP/XML, presentation relationship order | Original slide numbers; slide text only; no speaker notes/charts/image interpretation |
 | PPT | Compound-file text atoms | Legacy storage order may differ from slideshow order; convert to PPTX for exact slide order |
-| JPG / JPEG / PNG / GIF / GIFF / WebP / BMP | Browser image decoding + Tesseract printed OCR | English/Tamil/Hindi; first GIF frame only; 40 megapixels; longest OCR side 2400 pixels |
+| JPG / JPEG / PNG / GIF / GIFF / WebP / BMP | Browser image decoding + Tesseract printed OCR | English/Tamil/Hindi; first GIF frame only; 40 megapixels; longest OCR side 3600 pixels; review required before indexing |
 | XML | Safe native XML parsing; leaf text and tag labels | DTD/entities rejected; attributes are not indexed |
 | TXT / MD / JSON | UTF-8 text; JSON syntax validation | Source document text order; no rendered layout |
 | DOC | Conversion instruction | Save as DOCX or PDF. Server conversion is not enabled. |
 
 All supported readers run locally with a 20 MB file limit. New non-PDF readers also cap extracted text at 2 million characters. Office archives have a 40 MB expanded-size cap and 10 MB per entry. Source modal downloads the original Office/text file and shows original images; it does not embed Office files as PDFs. OCR downloads public models but does not upload image contents. AI mode remains an optional, separately configured cloud path.
+
+
+## Image OCR review and handwriting handling
+
+Printed OCR cannot reliably read handwriting or interpret diagrams. Select **Image content type → Handwriting or diagram** before uploading these images; the app skips printed OCR and opens a manual transcription panel. All image uploads require review: compare the original image, correct the text, then click **Use reviewed text**. Until approval, image chunks are empty and generation, questions and embeddings are blocked. Approval creates source-labelled `image-reviewed` passages; changing the document clears prior results. The source modal distinguishes user-reviewed transcriptions from raw OCR.
+
+Printed image OCR enlarges small images up to 2× and limits the longest side to 3600 pixels and the OCR canvas to 10 million pixels. Tesseract auto-rotation and word-level block diagnostics are enabled. Acceptance requires a diagnostic score of at least 65, sensible character ratios, the selected script, and sufficient higher-scoring words when metadata is available. English checks reject obvious consonant noise, not all plausible-but-wrong words. These are heuristics, not accuracy guarantees or handwriting support. Rejected image text is available only as an editable draft, never as indexed evidence. Handwriting/diagram transcription must be supplied and checked by the student; no vision AI provider is enabled.
+
+`ImageTextReview.jsx` renders original/draft comparison. `image-review.js` validates the approved text, retains image source location/raw-draft provenance and rebuilds chunks. Review time shown for indexing measures computation, not the time a student spends correcting text. No image contents are sent to an external OCR service.

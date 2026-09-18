@@ -41,7 +41,7 @@ export async function readPdf(file,onProgress,options={}){
       const base=p.getViewport({scale:1});const viewport=p.getViewport({scale:Math.min(3,2400/Math.max(base.width,base.height))});
       if(!canvas)canvas=document.createElement('canvas');canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
       await p.render({canvasContext:canvas.getContext('2d'),viewport,background:'rgb(255,255,255)'}).promise;checkCancelled();
-      recognitionStarted=true;const result=assessOcr(await session.recognize(canvas,page));checkCancelled();
+      recognitionStarted=true;const result=assessOcr(await session.recognize(canvas,page),{language:ocrLanguage});checkCancelled();
       if(result.accepted){text=result.text;origin='ocr';ocrConfidence=result.confidence;quality={status:'ocr',short:text.length<40,confidence:ocrConfidence};ocr.recognized++;}
       else{quality={...quality,ocrAttempted:true,warning:`${quality.warning||'Page needs review.'} ${result.reason}`};ocr.failed++;}
      }catch(error){checkCancelled();ocr.failed++;ocrUnavailable=recognitionStarted||!session;quality={...quality,ocrAttempted:true,warning:`${quality.warning||'Page needs review.'} OCR could not finish: ${error.message||'recognition failed'}.`};}
