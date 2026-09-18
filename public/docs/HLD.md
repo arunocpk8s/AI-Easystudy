@@ -58,7 +58,7 @@ AI evidence is transmitted to Vercel and Groq. Optional semantic setup downloads
 | Decision | Reason | Tradeoff |
 |---|---|---|
 | React + Vite instead of Streamlit | Flexible dashboard and direct Vercel frontend deployment | More UI code |
-| PDF.js browser extraction | Page references and no file upload service | Browser resource limits, no OCR |
+| PDF.js browser extraction | Page references and no file upload service | Browser resource limits; OCR transcriptions need review |
 | In-memory index instead of Qdrant | Simple private single-document prototype | Refresh loses state; not a persistent enterprise vector database |
 | BM25 baseline | Immediate operation without model download | Weak cross-language and paraphrase retrieval |
 | Optional multilingual E5 | Semantic and cross-language search locally | Initial download and CPU/memory costs; Tamil ranking weak in the small fixture |
@@ -67,14 +67,17 @@ AI evidence is transmitted to Vercel and Groq. Optional semantic setup downloads
 
 ## Future enterprise evolution
 
-Add identity, tenant-scoped storage, object storage, ingestion jobs, OCR, Qdrant with tenant/document filters, reranking, provider budgets, rate limits, retention controls and broader teacher-reviewed evaluation. These are planned changes, not current features.
+Add identity, tenant-scoped storage, object storage, ingestion jobs, production OCR quality evaluation, Qdrant with tenant/document filters, reranking, provider budgets, rate limits, retention controls and broader teacher-reviewed evaluation. These are planned changes, not current features.
 
 ## Student and process dashboards
 
-The reference-led UI has Student view and Behind the RAG tabs. The student chooses class, subject and preferred language, uploads a PDF and selects a study tool. Mind maps and roadmaps render native SVG nodes and explicit connections, with source inspection and export. The process dashboard displays eight stages, actual measurements where recorded, and honest optional/unavailable statuses. OCR and Qdrant are not depicted as running services in the current implementation.
+The reference-led UI has Student view and Behind the RAG tabs. The student chooses class, subject and preferred language, uploads a PDF and selects a study tool. Mind maps and roadmaps render native SVG nodes and explicit connections, with source inspection and export. The process dashboard displays eight stages, actual measurements where recorded, and honest optional/unavailable statuses. OCR runs on the student device with Tesseract; persistent Qdrant is not a running service.
 
 ## Browser-local translation
 
 No provider API key is required. English source aids → Tamil using q8 NLLB in a dedicated web worker. Tamil questions → English before retrieval. Original page references, formulas and quoted excerpts remain exact. Translation errors are visible and cancellable; cached models depend on browser storage. First download is approximately 900 MB plus runtime/tokenizer files. Local mode translates selected source content, not new teacher explanations. Intended for English PDFs; technical translation needs review.
 
 Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (structured provenance-safe traversal and bounded segments), `src/workers/translation.worker.js` (download, WASM translation, sequential queue and in-memory translation cache). Cache strings are cleared on document replacement/removal; model files may remain in browser cache. Model pinned to Xenova/nllb-200-distilled-600M at revision 261c31d1a5732c67cdd16d80e8d6088507c7ccea, CC-BY-NC-4.0, based on Meta NLLB-200.
+
+
+Printed scanned-page OCR is integrated into browser document preparation. PDF.js rasterizes image-only pages and Tesseract recognizes the selected printed language locally. Successful transcriptions enter the source index; blank and failed pages remain explicit in coverage. Original PDFs stay on the device. Recognition runtime/language files are downloaded from jsDelivr; cloud explanation credentials are independent of OCR.

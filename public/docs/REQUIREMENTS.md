@@ -6,7 +6,7 @@ Students struggle to navigate long documents, distinguish related concepts, and 
 
 Primary users: Class 11/12 students. Secondary users: teachers checking output and project reviewers examining the RAG implementation. PDF content is chosen by the learner; class and subject are not hard-coded.
 
-MVP accepts printed, text-based PDFs of up to 20 MB and 200 pages. English extractive materials preserve source language; AI outputs support English, Tamil or Hindi. Reading extraction is not guaranteed for every PDF. Password-protected, damaged and scanned PDFs may fail or produce warnings. OCR, diagrams, handwritten content, persistent storage and multi-user accounts are outside the current implementation.
+MVP accepts printed text-based and scanned PDFs of up to 20 MB and 200 pages. English extractive materials preserve source language; AI outputs support English, Tamil or Hindi. Reading extraction is not guaranteed for every PDF. Password-protected, damaged and scanned PDFs may fail or produce warnings. Diagram interpretation, handwritten recognition, persistent storage and multi-user accounts are outside the current implementation.
 
 ## Functional requirements and acceptance criteria
 
@@ -65,3 +65,8 @@ Hindi is available alongside English and Tamil. Local Hindi uses hin_Deva in the
 ## Focused graph acceptance
 
 Mind maps and roadmaps use professional sans-serif fonts. Graphs show concise concepts and necessary facts rather than paragraph labels. Source-based selection considers all chunks but displays only up to three essential facts per topic; this is not complete chapter coverage. Only a selected topic's essentials appear beneath the diagram; full textbook passages open through citations. Diagrams fit the normal page, preserve source links, and resize nodes to avoid clipping.
+
+
+## Local OCR acceptance
+
+Image-only pages support browser-local printed-text OCR in English, Tamil and Hindi. PDF printed language is independent of preferred output language and is selected before uploading. OCR may be disabled. Blank pages skip recognition; existing text layers are retained without OCR. Recognized passages retain their original page numbers and are labelled as OCR transcriptions. Low-scoring/noisy results and failed pages are excluded and reported; other readable pages remain usable. A document with no indexed text still exposes page coverage and warnings. Processing is cancellable and workers/canvases are released. Recognition is heuristic and must not imply handwriting, diagram understanding, exact equation recognition or exhaustive mixed-page image coverage.

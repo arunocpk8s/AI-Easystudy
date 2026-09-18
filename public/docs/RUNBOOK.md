@@ -14,7 +14,7 @@ Open http://127.0.0.1:5173. Local Vite middleware serves `/api/status` and `/api
 ## 2. No-key workflow
 
 1. Explore the demo, which uses original physics notes.
-2. Upload a text-based PDF smaller than 20 MB / 200 pages.
+2. Select PDF printed language, enable local OCR for scanned pages, and upload a PDF smaller than 20 MB / 200 pages.
 3. Review extraction warnings.
 4. Open Study studio and create notes, flashcards or a quiz in Extractive mode.
 5. Open source buttons to inspect passages and original PDF pages.
@@ -89,7 +89,7 @@ Do not put provider secrets in frontend build variables. The workspace token is 
 
 | Symptom | Action |
 |---|---|
-| Scanned PDF has no readable text | Use a text-based PDF or externally OCR it; integrated OCR is not available |
+| Scanned PDF has no readable text | Enable local OCR, choose the PDF printed language, and re-upload; check network access to jsDelivr and scan quality. |
 | Formula or reading order is wrong | Inspect original pages; do not trust incomplete extraction |
 | AI not configured | Set both server key and workspace token, then restart/redeploy |
 | 401 | Verify the workspace access token, not the Groq key |
@@ -106,7 +106,7 @@ Use Git history to identify the last passing source state. Redeploy that state o
 
 ## Graphical study tools
 
-In Student view choose Mind map or Study roadmap. Click a node to open its full text and source buttons. Use zoom controls and scroll the canvas. More than six topics are paginated; no topics are silently discarded. Export SVG saves the displayed diagram page, while the general Markdown export saves all study items. In the roadmap, Mark as reviewed tracks progress for this session. Class, subject and language choices guide generation; they do not verify syllabus alignment. The Behind the RAG tab distinguishes measured work from optional embedding and unavailable OCR.
+In Student view choose Mind map or Study roadmap. Click a node to open only its essential ideas and source buttons. Use zoom controls and scroll the canvas. More than six topics are paginated; no topics are silently discarded. Export SVG saves the displayed diagram page, while the general Markdown export saves all study items. In the roadmap, Mark as reviewed tracks progress for this session. Class, subject and language choices guide generation; they do not verify syllabus alignment. The Behind the RAG tab distinguishes measured work from optional embedding and local OCR availability/results.
 
 ## Visual study workflow
 
@@ -126,7 +126,7 @@ Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (str
 
 ## Blank-page notices and reading outputs
 
-Refresh and upload the PDF again after updating this version; existing in-memory documents keep their earlier parsing report. Read Document reading summary: blank pages are skipped automatically, short text is included, and visible no-text content needs manual review. Open Check page coverage to inspect each original PDF page. For scanned text, prepare a searchable PDF with OCR elsewhere and upload it. For diagrams, inspect the original page.
+Refresh and upload the PDF again after updating this version; existing in-memory documents keep their earlier parsing report. Read Document reading summary: blank pages are skipped automatically, short text is included, and visible no-text content needs manual review. Open Check page coverage to inspect each original PDF page. For scanned printed text, enable browser-local OCR, select the printed language and upload again. For diagrams, inspect the original page.
 
 Mind maps and roadmaps open in Fit page. Use Fit graph to page after manual zoom. Read the complete topic content below the graphic without zoom; expand subtopics and check source pages. Changing outputs resets diagram zoom.
 
@@ -135,3 +135,18 @@ Mind maps and roadmaps open in Fit page. Use Fit graph to page after manual zoom
 Visual flashcards use source-linked code-native SVG concept diagrams with reveal controls, individual SVG image downloads and printing. MCQ quizzes require four unique options and one matching answer in every mode. Source-only MCQs are exact-wording recall questions (maximum 10), not inferred conceptual exam questions. Conceptual demo MCQs are manually authored; cloud MCQs depend on model grounding. Selected options are scored after submission; explanation and evidence remain visible.
 
 Hindi is available alongside English and Tamil. Local Hindi uses hin_Deva in the existing NLLB model; Hindi questions are translated to English before retrieval. Cloud input accepts Hindi and requests Hindi explanations. Original quotes, formulas and citations stay unchanged. When option translations collapse to identical words, original option labels disambiguate them and the correct answer follows its original option index.
+
+
+## Printed scanned-page OCR
+
+1. Refresh the site after this update; already loaded documents keep their earlier extraction results.
+2. In Student view leave **Read scanned pages with local OCR** enabled.
+3. Choose **PDF printed language** (English, Tamil or Hindi), independently of preferred output language.
+4. Upload a text/scanned PDF. First use needs internet for runtime and language downloads. Image-only pages are recognized locally; blank pages are skipped.
+5. Inspect Document reading summary and original source pages. Correct the PDF or use a clearer searchable copy if equations, symbols or technical terms are wrong.
+6. Generate study materials or ask a question. Use citations to compare OCR passages against the scan.
+7. Open Behind the RAG to inspect measured OCR duration and recognized/attempted page counts. **Cancel PDF processing** aborts the upload and preserves the previous document.
+
+If recognition fails, readable text-layer pages remain indexed, and the warning identifies omitted pages. If none are readable, the document coverage still appears but study tools explain that no passages are available. Split large scans into chapters for faster processing. OCR does not interpret diagrams or handwriting, and does not automatically cover image text on pages that already contain a selectable text layer.
+
+For a live smoke test, run `node scripts/smoke-ocr.js English https://ai-easystudy.vercel.app`; replace English with Tamil/Hindi to use the corresponding original fixture. Reports are written to `evaluation/results/ocr-<language>-production.json`.

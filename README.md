@@ -56,7 +56,7 @@ The same documents are available through Project guide in the dashboard.
 
 ## Boundaries
 
-20 MB / 200 pages per PDF. No OCR, handwritten-note recognition, or diagram interpretation. Equations and multi-column reading order require manual checks. Documents, vectors, tokens and generation caches live in browser memory and clear on refresh. No cross-device persistence, accounts or production user authentication. The workspace token protects AI access but is not enterprise identity or per-user authorization. Do not publish an unprotected paid API endpoint.
+20 MB / 200 pages per PDF. Browser-local OCR supports printed image-only pages in English, Tamil and Hindi. Handwritten-note recognition and diagram interpretation are not supported. Equations and multi-column reading order require manual checks. Documents, vectors, tokens and generation caches live in browser memory and clear on refresh. No cross-device persistence, accounts or production user authentication. The workspace token protects AI access but is not enterprise identity or per-user authorization. Do not publish an unprotected paid API endpoint.
 
 ## Vercel
 
@@ -95,3 +95,8 @@ Build with `npm.cmd run build`. Deploy using `npx.cmd vercel --prod --yes`, or i
 
 
 Mind maps and roadmaps now use professional fonts, concise concept labels, and content-aware node heights. Choose a diagram node or **Topic essentials** to read only that topic's necessary points; full-book text is no longer repeated beneath the diagrams. Source mode selects up to three complete facts per topic without cloud calls. Optional Groq mode uses stricter concise graph prompts and output validation; it still needs server credentials.
+
+
+Scanned PDFs: in Student view, leave **Read scanned pages with local OCR** enabled and choose **PDF printed language** before uploading. This is separate from the preferred output language. Text-layer pages are read normally; blank pages are skipped; image-only pages are rendered and recognized locally with Tesseract.js. No API key or PDF upload to an OCR server is required. First use downloads runtime/language files from jsDelivr. Review OCR spelling, scientific symbols and equations against the original page. Use **Cancel PDF processing** to stop an upload, including model initialization.
+
+Real OCR checks: `node scripts/smoke-ocr.js English` (also Tamil/Hindi) against a running production preview. Original scanned fixtures can be regenerated with `node scripts/create-scanned-fixtures.js` on Windows with Nirmala UI font installed. These fixtures are synthetic printed content, not NCERT excerpts or handwriting.

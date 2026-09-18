@@ -1,7 +1,9 @@
 import {sentences,tokenize} from './rag.js';
 export function cleanSentences(chunk){
-  const text=chunk.text.replace(chunk.title,'').trim();
-  return text.split(/(?<=[.!?])\s+/).map(s=>s.trim()).filter(s=>s.length>25||(/[=²]/.test(s)&&s.length>=5)).filter(s=>!/original demonstration fixture|not an NCERT excerpt/i.test(s));
+  let text=chunk.text;
+  if(!/[.!?]/.test(chunk.title)&&!/\b(is|are|describes|means|refers)\b/i.test(chunk.title)&&text.startsWith(chunk.title)&&/^[\r\n.]/.test(text.slice(chunk.title.length)))text=text.slice(chunk.title.length);
+  text=text.trim();
+  return text.split(/(?<=[.!?])\s+/).map(s=>s.trim()).filter(s=>s.length>=10||(/[=²]/.test(s)&&s.length>=5)).filter(s=>!/original demonstration fixture|not an NCERT excerpt/i.test(s));
 }
 export function sourceAnswer(evidence,question){
   const terms=new Set(tokenize(question));

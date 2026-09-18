@@ -7,7 +7,8 @@
 | React | Two-view dashboard, document/session state, study tools | Component-based responsive UI |
 | Native SVG | Connected mind maps and roadmaps with export | Code-native graphical output, no image generation or graph service needed |
 | Vite | Dev server and production assets | Suitable for Vercel static frontend |
-| PDF.js | Local extraction with page references | Official Mozilla PDF processing library |
+| PDF.js | Local text extraction and scanned-page rendering with page references | Official Mozilla PDF processing library |
+| Tesseract.js 7.0.0 | Browser-local printed-page OCR | English, Tamil and Hindi without cloud API keys |
 | Transformers.js | Optional multilingual embeddings | Browser-local semantic retrieval |
 | BM25 implementation | No-download keyword baseline | Transparent and testable retrieval |
 | Reciprocal rank fusion | Combine keyword and semantic ranks | No assumption that raw scores share a scale |
@@ -62,3 +63,6 @@ Physics subject mode uses a small project-authored terminology glossary for exac
 Visual flashcards use source-linked code-native SVG concept diagrams with reveal controls, individual SVG image downloads and printing. MCQ quizzes require four unique options and one matching answer in every mode. Source-only MCQs are exact-wording recall questions (maximum 10), not inferred conceptual exam questions. Conceptual demo MCQs are manually authored; cloud MCQs depend on model grounding. Selected options are scored after submission; explanation and evidence remain visible.
 
 Hindi is available alongside English and Tamil. Local Hindi uses hin_Deva in the existing NLLB model; Hindi questions are translated to English before retrieval. Cloud input accepts Hindi and requests Hindi explanations. Original quotes, formulas and citations stay unchanged. When option translations collapse to identical words, original option labels disambiguate them and the correct answer follows its original option index.
+
+
+OCR implementation references: [Tesseract.js API](https://github.com/naptha/tesseract.js/blob/v7.0.0/docs/api.md) and [local installation](https://github.com/naptha/tesseract.js/blob/v7.0.0/docs/local-installation.md). Tesseract.js/core are Apache-2.0; the verified English/Tamil/Hindi language-data distribution packages report MIT licensing. The package lock pins runtime dependencies and OCR static download paths explicitly pin core 7.0.0 and language packages 1.0.0. OCR images are processed on the student's device; jsDelivr requests download code and language files.

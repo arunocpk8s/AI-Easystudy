@@ -102,7 +102,7 @@ No durable sessions, per-user identity, server quotas or distributed rate limits
 
 ## Reference dashboard and telemetry details
 
-Student view presents eight main cards plus revision notes and PDF Q&A. Behind the RAG shows Validate, Decode, OCR, Structure, Chunk, Embed, Index and Generate. OCR is explicitly unavailable; embedding is optional; the index is browser memory rather than Qdrant. Preparation records validation, extraction, heading structure, chunking and source-lookup construction using separate performance timers. Generation durations come from the last measured request. Model files may be browser-cached; document vectors and results remain session-memory only.
+Student view presents eight main cards plus revision notes and PDF Q&A. Behind the RAG shows Validate, Decode, OCR, Structure, Chunk, Embed, Index and Generate. OCR uses browser-local Tesseract on printed image-only pages; embedding is optional; the index is browser memory rather than Qdrant. Preparation records validation, extraction, heading structure, chunking and source-lookup construction using separate performance timers. Generation durations come from the last measured request. Model files may be browser-cached; document vectors and results remain session-memory only.
 
 ## Browser-local translation
 
@@ -114,7 +114,7 @@ Physics subject mode uses a small project-authored terminology glossary for exac
 
 ## Blank pages and normal reading layouts
 
-PDF extraction retains every original page number. Pages with selectable text are included even if short. No-text pages are rendered locally into a 256-pixel preview: a white preview is treated as blank; visible marks require manual review; preview failure is reported as unknown. Blank pages do not create chunks or OCR warnings. Preview classification is a heuristic, not OCR or diagram interpretation. `pageReport` supports per-page coverage and original-page inspection.
+PDF extraction retains every original page number. Pages with selectable text are included even if short. No-text pages are rendered locally into a 256-pixel preview: a white preview is treated as blank; visible marks and unknown previews can trigger OCR when enabled; failed/noisy recognition requires manual review. Blank pages do not create chunks or OCR warnings. Preview classification is a heuristic, not OCR or diagram interpretation. `pageReport` supports per-page coverage and original-page inspection.
 
 StudyGraph starts in responsive Fit page mode, uses ResizeObserver for container width, and resets manual zoom on new outputs. The full diagram uses normal document scrolling rather than a vertically constrained canvas. TopicReader shows only the selected topic: a short definition, at most three key ideas, optional formula, and a roadmap self-check. Original passages are opened using citations; the complete book is not repeated below diagrams. Optional zoom remains available for diagram details. Architecture diagrams fit their container too.
 
@@ -132,3 +132,12 @@ Hindi is available alongside English and Tamil. Local Hindi uses hin_Deva in the
 Chunk text now retains original line breaks and word-overlap boundaries, allowing standalone headings to be excluded from graph explanations. A page title that is itself a short paragraph is never deleted as a heading. Mind-map branches use short category names; code-native SVG nodes have professional sans-serif fonts and content-aware heights. Six topics appear per graph page. The selector and node inspector show only one selected topic. Original source content requires opening a citation.
 
 Cloud Groq generation remains optional and requires server credentials. Its graph prompt requests at most three essential facts, specific roadmap objectives/self-checks, and concise named concepts. Server validation rejects paragraph dumps: topic title <= 70 characters, body <= 240, point <= 190, maximum three key points; mind maps maximum three subtopics with titles <= 45 and two points each; roadmap objectives/checkpoints <= 180. These shape checks do not prove factual grounding. Browser-local translation remains experimental.
+
+
+## OCR implementation
+
+`ocr-quality.js` defines printed-language models (`eng`, `tam`, `hin`), a minimum recognition score of 45 and minimum text checks (eight Unicode letters and two tokens), cancellable bounded waits, and synchronous worker-creation capture. The recognition score is an engine diagnostic, not calibrated factual confidence. `ocr.js` lazily loads Tesseract.js 7.0.0, starts one worker per document, reuses it across scanned pages and terminates it on completion/error/cancellation, including initialization. The constructor capture is confined to the synchronous public `createWorker` invocation and immediately restores the browser constructor.
+
+`pdf.js` extracts text, renders a 256-pixel no-text-page preview, skips white blank pages, and recognizes visible/unknown image-only pages. OCR renders up to a 2400-pixel longest edge, at scale up to three. Initialization timeout is 120 seconds; each recognition timeout is 90 seconds. Canvas dimensions are reset after each page. Successful text sets Page/Chunk `origin: ocr` and records an OCR diagnostic score; failed text never enters chunks. Scanned pages retain original page numbers. Decode and OCR timings are recorded separately.
+
+The self-hosted worker script is included in Vite assets. Core WASM is pinned to the Tesseract.js-core 7.0.0 jsDelivr directory; language data uses the verified `@tesseract.js-data/<lang>@1.0.0/4.0.0_best_int` directory. Downloads are public static files, not document uploads. Language caching uses Tesseract's browser storage. OCR transcriptions flow through the same chunking, retrieval and study tools; the source modal tells readers to compare them with the original scan. Textbook quote validation checks recognized evidence text, not the original image, and cannot prove OCR accuracy. Text-layer pages containing additional image text are not automatically OCRed; table structure, handwriting and diagram semantics remain unsupported.

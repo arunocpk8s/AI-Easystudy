@@ -13,7 +13,7 @@ test('real PDF extraction, evidence search, deletion and responsive layout',asyn
   await page.goto('/');await page.getByLabel('Upload PDF file').setInputFiles('tests/fixtures/study.pdf');
   await expect(page.locator('.document-strip').getByText('study.pdf',{exact:true})).toBeVisible();
   await page.getByRole('button',{name:'Ask this PDF',exact:true}).click();await page.getByLabel('Question',{exact:true}).fill('electric charge conserved');
-  await page.getByRole('button',{name:'Find an answer'}).click();await expect(page.getByRole('heading',{name:'Source-based answer'})).toBeVisible();
+  await page.getByRole('button',{name:'Find an answer'}).click();await expect(page.getByRole('heading',{name:'Source-based answer',level:2,exact:true})).toBeVisible();
   await page.getByRole('tab',{name:'Student view',exact:true}).click();await page.getByRole('button',{name:'Remove',exact:true}).click();await expect(page.getByText('No document yet')).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
 });
@@ -49,7 +49,7 @@ test('reference views show real stages and both graphs have navigable source lin
   await expect(page.locator('.reference-subnav')).toContainText('Class 11 · Chemistry');
   await page.getByRole('tab',{name:'Behind the RAG'}).click();
   await expect(page.locator('.pipeline-card')).toHaveCount(8);
-  await expect(page.locator('.stage-unavailable')).toContainText('Not implemented');
+  await expect(page.locator('.pipeline-card').filter({has:page.getByRole('heading',{name:'3. OCR',exact:true})})).toContainText('Available');await expect(page.locator('.stage-unavailable')).toHaveCount(0);
   await page.getByRole('tab',{name:'Student view'}).click();
   await page.getByRole('button',{name:'Create Mind map',exact:true}).click();
   await expect(page.getByRole('region',{name:'Graphical mind map'})).toBeVisible();

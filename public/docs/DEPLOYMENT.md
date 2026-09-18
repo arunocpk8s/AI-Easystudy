@@ -18,6 +18,6 @@
 
 PDF extraction, source-based study materials, graphical flashcards, MCQ practice, diagrams, and the bilingual demo work without cloud credentials. Local Tamil/Hindi translation downloads approximately 900 MB of model weights on first use and remains experimental. A real browser Hindi smoke check translated a basic sentence and question in 194 seconds including initial model loading; this is not a translation-quality benchmark.
 
-Cloud explanations are not enabled in this deployment. To enable them, set `GROQ_API_KEY` and `STUDY_ACCESS_TOKEN` in Vercel production environment variables, optionally set `GROQ_MODEL`, redeploy, and enter the workspace access token in the application Settings. Keep these values out of Git. Scanned-page OCR and diagram interpretation are not implemented.
+Cloud explanations are not enabled in this deployment. To enable them, set `GROQ_API_KEY` and `STUDY_ACCESS_TOKEN` in Vercel production environment variables, optionally set `GROQ_MODEL`, redeploy, and enter the workspace access token in the application Settings. Keep these values out of Git. Printed scanned-page OCR runs locally in the browser and needs no API key. Diagram interpretation and handwriting recognition are not implemented.
 
 See `evaluation/results/production-smoke.json` and `public/docs/VALIDATION.md` for actual validation scope, and `public/docs/RUNBOOK.md` for local setup and operational steps.

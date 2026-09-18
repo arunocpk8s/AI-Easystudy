@@ -3,7 +3,7 @@ test('blank page is skipped, short text retained, and only visible no-text page 
  const pdf=await PDFDocument.create();const first=pdf.addPage([400,500]);first.drawText('Electric charge is a property of matter.',{x:25,y:450,size:12});
  const blank=pdf.addPage([400,500]);blank.drawRectangle({x:0,y:0,width:400,height:500,color:rgb(1,1,1)});
  pdf.addPage([400,500]).drawText('Units',{x:25,y:450,size:12});pdf.addPage([400,500]).drawRectangle({x:25,y:300,width:200,height:80,color:rgb(0,0,0)});
- await page.goto('/');await page.getByLabel('Upload PDF file').setInputFiles({name:'page-coverage.pdf',mimeType:'application/pdf',buffer:Buffer.from(await pdf.save())});
+ await page.goto('/');await page.getByLabel('Read scanned pages with local OCR').uncheck();await page.getByLabel('Upload PDF file').setInputFiles({name:'page-coverage.pdf',mimeType:'application/pdf',buffer:Buffer.from(await pdf.save())});
  const summary=page.getByRole('region',{name:'Document reading summary'});await expect(summary).toContainText('Page 2 is blank.');await expect(summary).toContainText('2 of 4 pages have selectable text');
  await expect(page.getByRole('alert')).toContainText('Page 4: Visible content');await expect(page.getByRole('alert')).not.toContainText('Page 2');
  await summary.getByText('Check page coverage and what to do next').click();await expect(summary).toContainText('Short text — included');await summary.getByRole('button',{name:'Page 2',exact:true}).click();await expect(page.getByRole('dialog',{name:'Source evidence'})).toContainText('PDF page 2');await page.keyboard.press('Escape');

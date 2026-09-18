@@ -1,0 +1,14 @@
+{
+  "language": "Tamil",
+  "baseURL": "http://127.0.0.1:4173",
+  "elapsedMs": 2620,
+  "transcription": "மின்சுமை மின்சுமை என்பது பொருளின்‌ ஒரு பண்பு. ஓத்த மின்சுமைகள்‌ விலகுதின்றன. எதிர்‌ மின்சுமைகள்‌ ஈர்க்கின்றன.",
+  "errors": [],
+  "checks": [
+    "Real image-only PDF page recognized in browser with actual Tesseract WASM",
+    "Blank page skipped",
+    "Original page number and OCR source label preserved",
+    "OCR timing and recognized-page count shown"
+  ],
+  "scope": "Original synthetic printed fixture. Not a textbook, handwriting, equations or diagram-quality benchmark."
+}

@@ -1,0 +1,14 @@
+{
+  "language": "Hindi",
+  "baseURL": "http://127.0.0.1:4173",
+  "elapsedMs": 3092,
+  "transcription": "विद्युत आवेश विद्युत आवेश पदार्थ का एक गुण है। समान आवेश एक GR को प्रतिकर्षित करते हैं। विपरीत आवेश एक CHR को आकर्षित करते हैं।",
+  "errors": [],
+  "checks": [
+    "Real image-only PDF page recognized in browser with actual Tesseract WASM",
+    "Blank page skipped",
+    "Original page number and OCR source label preserved",
+    "OCR timing and recognized-page count shown"
+  ],
+  "scope": "Original synthetic printed fixture. Not a textbook, handwriting, equations or diagram-quality benchmark."
+}
