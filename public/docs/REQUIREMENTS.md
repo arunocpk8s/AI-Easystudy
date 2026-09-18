@@ -70,3 +70,20 @@ Mind maps and roadmaps use professional sans-serif fonts. Graphs show concise co
 ## Local OCR acceptance
 
 Image-only pages support browser-local printed-text OCR in English, Tamil and Hindi. PDF printed language is independent of preferred output language and is selected before uploading. OCR may be disabled. Blank pages skip recognition; existing text layers are retained without OCR. Recognized passages retain their original page numbers and are labelled as OCR transcriptions. Low-scoring/noisy results and failed pages are excluded and reported; other readable pages remain usable. A document with no indexed text still exposes page coverage and warnings. Processing is cancellable and workers/canvases are released. Recognition is heuristic and must not imply handwriting, diagram understanding, exact equation recognition or exhaustive mixed-page image coverage.
+
+
+## Multi-format local ingestion
+
+| Upload | Reader and source references | Limits |
+|---|---|---|
+| PDF | PDF.js; original pages; local printed OCR | 200 pages; diagrams and handwriting require review |
+| DOCX | Bounded ZIP/XML paragraph reader | Document paragraph order, not Word pagination; body text only |
+| XLS / XLSX / CSV / TSV | SheetJS 0.20.3; named sheets and row text | 200 sheets, 100,000 cells per sheet; stored formula values only; no macro execution |
+| PPTX | ZIP/XML, presentation relationship order | Original slide numbers; slide text only; no speaker notes/charts/image interpretation |
+| PPT | Compound-file text atoms | Legacy storage order may differ from slideshow order; convert to PPTX for exact slide order |
+| JPG / JPEG / PNG / GIF / GIFF / WebP / BMP | Browser image decoding + Tesseract printed OCR | English/Tamil/Hindi; first GIF frame only; 40 megapixels; longest OCR side 2400 pixels |
+| XML | Safe native XML parsing; leaf text and tag labels | DTD/entities rejected; attributes are not indexed |
+| TXT / MD / JSON | UTF-8 text; JSON syntax validation | Source document text order; no rendered layout |
+| DOC | Conversion instruction | Save as DOCX or PDF. Server conversion is not enabled. |
+
+All supported readers run locally, with 20 MB file and 2 million extracted-character limits. Office archives have a 40 MB expanded-size cap and 10 MB per entry. Source modal downloads the original Office/text file and shows original images; it does not embed Office files as PDFs. OCR downloads public models but does not upload image contents. AI mode remains an optional, separately configured cloud path.

@@ -1,6 +1,6 @@
 import {test,expect} from '@playwright/test';
 test('dashboard generates source-linked materials, quiz and process view',async({page})=>{
-  await page.goto('/');await expect(page.getByRole('heading',{name:'Upload any study PDF'})).toBeVisible();
+  await page.goto('/');await expect(page.getByRole('heading',{name:'Upload your study material'})).toBeVisible();
   await page.getByRole('button',{name:'Create Short notes',exact:true}).click();
   await expect(page.getByText('Bilingual demo — manually authored')).toBeVisible();
   await page.getByRole('button',{name:'p. 1 S1',exact:true}).first().click();
@@ -10,9 +10,9 @@ test('dashboard generates source-linked materials, quiz and process view',async(
   await page.getByRole('tab',{name:'Behind the RAG',exact:true}).click();await expect(page.getByText('Measured wall-clock time')).toBeVisible();
 });
 test('real PDF extraction, evidence search, deletion and responsive layout',async({page})=>{
-  await page.goto('/');await page.getByLabel('Upload PDF file').setInputFiles('tests/fixtures/study.pdf');
+  await page.goto('/');await page.getByLabel('Upload study file').setInputFiles('tests/fixtures/study.pdf');
   await expect(page.locator('.document-strip').getByText('study.pdf',{exact:true})).toBeVisible();
-  await page.getByRole('button',{name:'Ask this PDF',exact:true}).click();await page.getByLabel('Question',{exact:true}).fill('electric charge conserved');
+  await page.getByRole('button',{name:'Ask this document',exact:true}).click();await page.getByLabel('Question',{exact:true}).fill('electric charge conserved');
   await page.getByRole('button',{name:'Find an answer'}).click();await expect(page.getByRole('heading',{name:'Source-based answer',level:2,exact:true})).toBeVisible();
   await page.getByRole('tab',{name:'Student view',exact:true}).click();await page.getByRole('button',{name:'Remove',exact:true}).click();await expect(page.getByText('No document yet')).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
@@ -31,7 +31,7 @@ test('flashcard reveal, mind-map sources, unsupported question and export',async
   await page.getByRole('button',{name:'Create material'}).click();
   await expect(page.locator('.map-root')).toBeVisible();
   await expect(page.locator('.map-node')).toHaveCount(4);
-  await page.getByRole('button',{name:'Ask this PDF',exact:true}).click();
+  await page.getByRole('button',{name:'Ask this document',exact:true}).click();
   await page.getByLabel('Question',{exact:true}).fill('photosynthesis chlorophyll');
   await page.getByRole('button',{name:'Find an answer'}).click();
   await expect(page.getByRole('heading',{name:'Not enough evidence'})).toBeVisible();
@@ -113,9 +113,9 @@ test('Tamil demo and graphical architecture are accessible',async({page})=>{
 test('Tamil question is translated for retrieval before a grounded AI response',async({page})=>{
  await page.route('**/api/status',r=>r.fulfill({json:{aiConfigured:true}}));const requests=[];
  await page.route('**/api/study',r=>{const input=r.request().postDataJSON();requests.push(input);return r.fulfill({json:input.feature==='translate_query'?{query:'electric charge conservation',generationMs:3,usage:{prompt_tokens:2,completion_tokens:2}}:{items:[{title:'மின்சுமை',body:'மின்சுமை அழியாது; அது நிலைபேறு உடையது.',sources:['S1']}],generationMs:5,usage:{prompt_tokens:4,completion_tokens:4}}});});
- await page.goto('/');await page.getByLabel('Upload PDF file').setInputFiles('tests/fixtures/study.pdf');await expect(page.locator('.document-strip')).toContainText('study.pdf');
+ await page.goto('/');await page.getByLabel('Upload study file').setInputFiles('tests/fixtures/study.pdf');await expect(page.locator('.document-strip')).toContainText('study.pdf');
  await page.getByLabel('Preferred language',{exact:true}).selectOption('Tamil');
  await page.getByRole('button',{name:'Settings',exact:true}).click();await page.getByLabel('Workspace access token').fill('test-token');await page.getByLabel('Study mode',{exact:true}).selectOption('ai');await page.getByRole('button',{name:'Save for this session'}).click();
- await page.getByRole('button',{name:'Ask this PDF',exact:true}).click();await page.getByLabel('Question',{exact:true}).fill('மின்சுமை நிலைபேறு என்றால் என்ன?');await page.getByRole('button',{name:'Find an answer'}).click();
+ await page.getByRole('button',{name:'Ask this document',exact:true}).click();await page.getByLabel('Question',{exact:true}).fill('மின்சுமை நிலைபேறு என்றால் என்ன?');await page.getByRole('button',{name:'Find an answer'}).click();
  await expect(page.getByRole('heading',{name:'மின்சுமை',exact:true})).toBeVisible();expect(requests.map(r=>r.feature)).toEqual(['translate_query','ask']);expect(requests[1].evidence[0].text).toMatch(/charge/i);
 });

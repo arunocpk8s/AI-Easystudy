@@ -1,0 +1,48 @@
+{
+  "baseURL": "http://127.0.0.1:4173",
+  "scope": "Actual browser OCR on clear original printed English image fixtures. Not diagram, handwriting, animation or textbook-quality evaluation.",
+  "results": [
+    {
+      "format": "png",
+      "elapsedMs": 2384,
+      "text": "ELECTRIC CHARGE\n\nElectric charge is a property of matter.\nLike charges repel. Unlike charges attract.\nThe SI unit of charge is coulomb.",
+      "remainingWorkers": 0,
+      "errors": []
+    },
+    {
+      "format": "jpg",
+      "elapsedMs": 1118,
+      "text": "ELECTRIC CHARGE\n\nElectric charge is a property of matter.\nLike charges repel. Unlike charges attract.\nThe SI unit of charge is coulomb.",
+      "remainingWorkers": 0,
+      "errors": []
+    },
+    {
+      "format": "jpeg",
+      "elapsedMs": 1110,
+      "text": "ELECTRIC CHARGE\n\nElectric charge is a property of matter.\nLike charges repel. Unlike charges attract.\nThe SI unit of charge is coulomb.",
+      "remainingWorkers": 0,
+      "errors": []
+    },
+    {
+      "format": "gif",
+      "elapsedMs": 1099,
+      "text": "ELECTRIC CHARGE\n\nElectric charge is a property of matter.\nLike charges repel. Unlike charges attract.\nThe SI unit of charge is coulomb.",
+      "remainingWorkers": 0,
+      "errors": []
+    },
+    {
+      "format": "giff",
+      "elapsedMs": 1070,
+      "text": "ELECTRIC CHARGE\n\nElectric charge is a property of matter.\nLike charges repel. Unlike charges attract.\nThe SI unit of charge is coulomb.",
+      "remainingWorkers": 0,
+      "errors": []
+    },
+    {
+      "format": "bmp",
+      "elapsedMs": 1463,
+      "text": "ELECTRIC CHARGE\n\nElectric charge is a property of matter.\nLike charges repel. Unlike charges attract.\nThe SI unit of charge is coulomb.",
+      "remainingWorkers": 0,
+      "errors": []
+    }
+  ]
+}

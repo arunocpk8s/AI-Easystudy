@@ -81,3 +81,6 @@ Modules: `src/lib/translation.js` (worker lifecycle), `translation-core.js` (str
 
 
 Printed scanned-page OCR is integrated into browser document preparation. PDF.js rasterizes image-only pages and Tesseract recognizes the selected printed language locally. Successful transcriptions enter the source index; blank and failed pages remain explicit in coverage. Original PDFs stay on the device. Recognition runtime/language files are downloaded from jsDelivr; cloud explanation credentials are independent of OCR.
+
+
+Document preparation now dispatches local PDF, Office, spreadsheet, XML/text and image-OCR readers. Slides, named sheets and document/image order retain source labels alongside passage IDs. No document-conversion server endpoint is enabled. Legacy DOC needs conversion to DOCX/PDF.

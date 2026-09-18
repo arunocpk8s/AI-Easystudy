@@ -100,3 +100,20 @@ Mind maps and roadmaps now use professional fonts, concise concept labels, and c
 Scanned PDFs: in Student view, leave **Read scanned pages with local OCR** enabled and choose **PDF printed language** before uploading. This is separate from the preferred output language. Text-layer pages are read normally; blank pages are skipped; image-only pages are rendered and recognized locally with Tesseract.js. No API key or PDF upload to an OCR server is required. First use downloads runtime/language files from jsDelivr. Review OCR spelling, scientific symbols and equations against the original page. Use **Cancel PDF processing** to stop an upload, including model initialization.
 
 Real OCR checks: `node scripts/smoke-ocr.js English` (also Tamil/Hindi) against a running production preview. Original scanned fixtures can be regenerated with `node scripts/create-scanned-fixtures.js` on Windows with Nirmala UI font installed. These fixtures are synthetic printed content, not NCERT excerpts or handwriting.
+
+
+## Multi-format local ingestion
+
+| Upload | Reader and source references | Limits |
+|---|---|---|
+| PDF | PDF.js; original pages; local printed OCR | 200 pages; diagrams and handwriting require review |
+| DOCX | Bounded ZIP/XML paragraph reader | Document paragraph order, not Word pagination; body text only |
+| XLS / XLSX / CSV / TSV | SheetJS 0.20.3; named sheets and row text | 200 sheets, 100,000 cells per sheet; stored formula values only; no macro execution |
+| PPTX | ZIP/XML, presentation relationship order | Original slide numbers; slide text only; no speaker notes/charts/image interpretation |
+| PPT | Compound-file text atoms | Legacy storage order may differ from slideshow order; convert to PPTX for exact slide order |
+| JPG / JPEG / PNG / GIF / GIFF / WebP / BMP | Browser image decoding + Tesseract printed OCR | English/Tamil/Hindi; first GIF frame only; 40 megapixels; longest OCR side 2400 pixels |
+| XML | Safe native XML parsing; leaf text and tag labels | DTD/entities rejected; attributes are not indexed |
+| TXT / MD / JSON | UTF-8 text; JSON syntax validation | Source document text order; no rendered layout |
+| DOC | Conversion instruction | Save as DOCX or PDF. Server conversion is not enabled. |
+
+All supported readers run locally, with 20 MB file and 2 million extracted-character limits. Office archives have a 40 MB expanded-size cap and 10 MB per entry. Source modal downloads the original Office/text file and shows original images; it does not embed Office files as PDFs. OCR downloads public models but does not upload image contents. AI mode remains an optional, separately configured cloud path.

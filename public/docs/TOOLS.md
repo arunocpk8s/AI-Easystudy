@@ -66,3 +66,20 @@ Hindi is available alongside English and Tamil. Local Hindi uses hin_Deva in the
 
 
 OCR implementation references: [Tesseract.js API](https://github.com/naptha/tesseract.js/blob/v7.0.0/docs/api.md) and [local installation](https://github.com/naptha/tesseract.js/blob/v7.0.0/docs/local-installation.md). Tesseract.js/core are Apache-2.0; the verified English/Tamil/Hindi language-data distribution packages report MIT licensing. The package lock pins runtime dependencies and OCR static download paths explicitly pin core 7.0.0 and language packages 1.0.0. OCR images are processed on the student's device; jsDelivr requests download code and language files.
+
+
+## Multi-format local ingestion
+
+| Upload | Reader and source references | Limits |
+|---|---|---|
+| PDF | PDF.js; original pages; local printed OCR | 200 pages; diagrams and handwriting require review |
+| DOCX | Bounded ZIP/XML paragraph reader | Document paragraph order, not Word pagination; body text only |
+| XLS / XLSX / CSV / TSV | SheetJS 0.20.3; named sheets and row text | 200 sheets, 100,000 cells per sheet; stored formula values only; no macro execution |
+| PPTX | ZIP/XML, presentation relationship order | Original slide numbers; slide text only; no speaker notes/charts/image interpretation |
+| PPT | Compound-file text atoms | Legacy storage order may differ from slideshow order; convert to PPTX for exact slide order |
+| JPG / JPEG / PNG / GIF / GIFF / WebP / BMP | Browser image decoding + Tesseract printed OCR | English/Tamil/Hindi; first GIF frame only; 40 megapixels; longest OCR side 2400 pixels |
+| XML | Safe native XML parsing; leaf text and tag labels | DTD/entities rejected; attributes are not indexed |
+| TXT / MD / JSON | UTF-8 text; JSON syntax validation | Source document text order; no rendered layout |
+| DOC | Conversion instruction | Save as DOCX or PDF. Server conversion is not enabled. |
+
+All supported readers run locally, with 20 MB file and 2 million extracted-character limits. Office archives have a 40 MB expanded-size cap and 10 MB per entry. Source modal downloads the original Office/text file and shows original images; it does not embed Office files as PDFs. OCR downloads public models but does not upload image contents. AI mode remains an optional, separately configured cloud path.
