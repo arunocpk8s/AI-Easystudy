@@ -1,0 +1,20 @@
+{
+  "baseURL": "https://ai-easystudy.vercel.app",
+  "browserChecksPassed": 20,
+  "projects": [
+    "desktop",
+    "mobile"
+  ],
+  "checks": [
+    "DOCX paragraph text and source links",
+    "PPTX presentation slide order",
+    "Legacy PPT storage records and order warning",
+    "XLS/XLSX sheets",
+    "CSV, XML and TXT text",
+    "XML entity rejection",
+    "Legacy DOC conversion instruction",
+    "Original file download and image preview",
+    "Actual printed PNG OCR on compiled production bundle"
+  ],
+  "scope": "Original synthetic format fixtures; not Office document completeness, textbook quality, cloud LLM or handwriting/diagram interpretation."
+}

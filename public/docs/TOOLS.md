@@ -82,4 +82,6 @@ OCR implementation references: [Tesseract.js API](https://github.com/naptha/tess
 | TXT / MD / JSON | UTF-8 text; JSON syntax validation | Source document text order; no rendered layout |
 | DOC | Conversion instruction | Save as DOCX or PDF. Server conversion is not enabled. |
 
-All supported readers run locally, with 20 MB file and 2 million extracted-character limits. Office archives have a 40 MB expanded-size cap and 10 MB per entry. Source modal downloads the original Office/text file and shows original images; it does not embed Office files as PDFs. OCR downloads public models but does not upload image contents. AI mode remains an optional, separately configured cloud path.
+All supported readers run locally with a 20 MB file limit. New non-PDF readers also cap extracted text at 2 million characters. Office archives have a 40 MB expanded-size cap and 10 MB per entry. Source modal downloads the original Office/text file and shows original images; it does not embed Office files as PDFs. OCR downloads public models but does not upload image contents. AI mode remains an optional, separately configured cloud path.
+
+The local Office readers use fflate 0.8.3 for bounded ZIP extraction and native DOMParser for XML. Spreadsheet/compound-file parsing uses the pinned SheetJS 0.20.3 package from its [official distribution](https://docs.sheetjs.com/docs/getting-started/installation/frameworks/). The GitHub MCP confirmed the published ingestion commit on main; Vercel CLI published the live release.

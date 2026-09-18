@@ -157,4 +157,4 @@ The self-hosted worker script is included in Vite assets. Core WASM is pinned to
 | TXT / MD / JSON | UTF-8 text; JSON syntax validation | Source document text order; no rendered layout |
 | DOC | Conversion instruction | Save as DOCX or PDF. Server conversion is not enabled. |
 
-All supported readers run locally, with 20 MB file and 2 million extracted-character limits. Office archives have a 40 MB expanded-size cap and 10 MB per entry. Source modal downloads the original Office/text file and shows original images; it does not embed Office files as PDFs. OCR downloads public models but does not upload image contents. AI mode remains an optional, separately configured cloud path.
+All supported readers run locally with a 20 MB file limit. New non-PDF readers also cap extracted text at 2 million characters. Office archives have a 40 MB expanded-size cap and 10 MB per entry. Source modal downloads the original Office/text file and shows original images; it does not embed Office files as PDFs. OCR downloads public models but does not upload image contents. AI mode remains an optional, separately configured cloud path.
