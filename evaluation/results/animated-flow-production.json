@@ -1,0 +1,18 @@
+{
+  "baseURL": "https://ai-easystudy.vercel.app",
+  "releaseCommit": "ccc2dbf870087df6b1fc743bacc9ff13a2b7a663",
+  "browserChecksPassed": 6,
+  "projects": [
+    "desktop",
+    "mobile"
+  ],
+  "checks": [
+    "Playback advances, pauses and supports manual restart/steps",
+    "Document, question, study-material and MCP-development paths",
+    "Whole-document coverage and current source-mode labels",
+    "Retrieved evidence from the actual demo session",
+    "Reduced-motion preference and mobile width",
+    "Playback makes no study API calls"
+  ],
+  "scope": "Live compiled UI behavior. Educational animation does not execute MCP, cloud generation, semantic models or OCR. Original demo evidence, not textbook-quality evaluation."
+}
