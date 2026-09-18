@@ -62,3 +62,16 @@ test('structured generation retries invalid output and never bypasses citation c
  const timeout=response();await handleStudy(req,timeout,async()=>{const e=new Error('timeout');e.name='TimeoutError';throw e;});assert.equal(timeout.statusCode,504);assert.match(timeout.data.error,/timed out/);
  }finally{for(const [key,value] of Object.entries({GROQ_API_KEY:oldKey,STUDY_ACCESS_TOKEN:oldToken,GROQ_MODEL:oldModel})){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });
+
+test('provider schema rejection is retried once with graph limits in the request',async()=>{
+ const previous={GROQ_API_KEY:process.env.GROQ_API_KEY,STUDY_ACCESS_TOKEN:process.env.STUDY_ACCESS_TOKEN,GROQ_MODEL:process.env.GROQ_MODEL};
+ try{
+ Object.assign(process.env,{GROQ_API_KEY:'test-not-real',STUDY_ACCESS_TOKEN:'test-token',GROQ_MODEL:'openai/gpt-oss-120b'});
+ let calls=0;const res=response();const item={title:'Charge',body:'Understand charge.',sources:['S1'],learningGoal:'Explain repulsion.',keyPoints:[{text:'Like charges repel.',sources:['S1']}],checkpoint:{text:'Do like charges repel?',sources:['S1']}};
+ await handleStudy({method:'POST',headers:{'x-study-token':'test-token'},body:{feature:'roadmap',language:'Hindi',evidence}},res,async(url,options)=>{
+ calls++;const schema=JSON.parse(options.body).response_format.json_schema.schema.properties.items.items.properties;assert.equal(schema.body.maxLength,240);assert.equal(schema.checkpoint.properties.text.maxLength,180);
+ if(calls===1)return {ok:false,status:400,json:async()=>({error:{code:'json_validate_failed'}})};
+ return {ok:true,json:async()=>({choices:[{finish_reason:'stop',message:{content:JSON.stringify({items:[item]})}}]})};
+ });assert.equal(calls,2);assert.equal(res.statusCode,200);assert.equal(res.data.attempts,2);
+ }finally{for(const [key,value] of Object.entries(previous)){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
+});
