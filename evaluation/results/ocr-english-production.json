@@ -1,0 +1,15 @@
+{
+  "language": "English",
+  "baseURL": "https://ai-easystudy.vercel.app",
+  "elapsedMs": 9534,
+  "transcription": "ELECTRIC CHARGE\n\nElectric charge is a property of matter.\nLike charges repel. Unlike charges attract.\nThe SI unit of electric charge is coulomb.\n\nCharge is conserved in an isolated system.",
+  "errors": [],
+  "remainingWorkers": 0,
+  "checks": [
+    "Real image-only PDF page recognized in browser with actual Tesseract WASM",
+    "Blank page skipped",
+    "Original page number and OCR source label preserved",
+    "OCR timing and recognized-page count shown"
+  ],
+  "scope": "Original synthetic printed fixture. Not a textbook, handwriting, equations or diagram-quality benchmark."
+}
