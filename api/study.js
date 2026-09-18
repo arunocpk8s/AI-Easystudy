@@ -1,4 +1,5 @@
 import {z} from 'zod';
+import {studyResponseFormat,removeNullFields} from './study-schema.js';
 import {timingSafeEqual} from 'node:crypto';
 const inputSchema=z.object({feature:z.enum(['ask','notes','mindmap','flashcards','summary','questions','confusions','quiz','revision','roadmap','translate_query']),language:z.enum(['English','Tamil','Hindi']),question:z.string().max(1000).optional(),classLevel:z.enum(['11','12','Other']).optional(),subject:z.string().max(100).optional(),evidence:z.array(z.object({id:z.string().regex(/^S\d+$/),page:z.number().int().positive(),title:z.string().max(200),text:z.string().min(1).max(12000)})).max(100)});
 const evidenceBlock=z.object({text:z.string().min(1).max(3000),sources:z.array(z.string()).min(1).max(20)});
@@ -58,19 +59,37 @@ For questions: title states suggested 1/2/3/5-mark practice format; body is a fo
 For confusions: body directly contrasts a plausible incorrect interpretation with the supported interpretation; label inferred confusion. Do not use generic 'review this passage' filler.
 For quiz: ONLY multiple-choice questions. Each has exactly 4 distinct plausible options with exactly one correct answer; answer must exactly match one option. Body explains the correct answer. Every question has sources.
 For ask: give 1-2 direct, useful answer items; do not dump source passages or include unrelated topic summaries.`;
-  try {
-    const response=await fetcher('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',signal:AbortSignal.timeout(45000),headers:{'Content-Type':'application/json',Authorization:`Bearer ${process.env.GROQ_API_KEY}`},
-      body:JSON.stringify({model:process.env.GROQ_MODEL||'llama-3.3-70b-versatile',temperature:0.2,max_tokens:input.feature==='translate_query'?256:4500,response_format:{type:'json_object'},messages:[
-        {role:'system',content:systemInstruction},
-        {role:'user',content:JSON.stringify({task:input.feature,question:input.question,classLevel:input.classLevel,subject:input.subject,evidence:input.evidence})}
-      ]})
-    });
-    if(!response.ok)return send(response.status===429?429:502,{error:response.status===429?'AI provider rate limit reached. Try again later.':'AI provider could not complete the request. Check server model configuration.'});
-    const data=await response.json();
-    const parsed=JSON.parse(data.choices?.[0]?.message?.content||'{}');
-    const output=input.feature==='translate_query'?z.object({query:z.string().min(1).max(1000)}).parse(parsed):validateOutput(parsed,input.evidence,input.feature);
-    return send(200,{...output,generationMs:performance.now()-started,usage:data.usage||null,model:process.env.GROQ_MODEL||'llama-3.3-70b-versatile'});
-  } catch {return send(502,{error:'Generation timed out or returned invalid output. No unsupported result was saved. Please retry.'});}
+  const model=process.env.GROQ_MODEL||'openai/gpt-oss-120b';
+  const deadline=performance.now()+50000;
+  const messages=[{role:'system',content:systemInstruction},{role:'user',content:JSON.stringify({task:input.feature,question:input.question,classLevel:input.classLevel,subject:input.subject,evidence:input.evidence})}];
+  let totalUsage={prompt_tokens:0,completion_tokens:0,total_tokens:0};
+  for(let attempt=0;attempt<2;attempt++){
+    try {
+      const remaining=deadline-performance.now();
+      if(remaining<1000)return send(504,{error:'AI generation timed out. Try again with a smaller section of the document.'});
+      const response=await fetcher('https://api.groq.com/openai/v1/chat/completions',{
+        method:'POST',signal:AbortSignal.timeout(Math.floor(Math.min(30000,remaining))),headers:{'Content-Type':'application/json',Authorization:`Bearer ${process.env.GROQ_API_KEY}`},
+        body:JSON.stringify({model,temperature:0.2,max_completion_tokens:input.feature==='translate_query'?1000:6500,
+          ...(model.startsWith('openai/gpt-oss-')?{reasoning_effort:'low'}:{}),
+          response_format:studyResponseFormat(input.feature,input.evidence,model),messages})
+      });
+      if(!response.ok)return send(response.status===429?429:502,{error:response.status===429?'AI provider rate limit reached. Try again later.':'AI provider could not complete the request. Check server model configuration.'});
+      const data=await response.json();
+      for(const key of Object.keys(totalUsage))totalUsage[key]+=data.usage?.[key]||0;
+      try {
+        if(data.choices?.[0]?.finish_reason==='length')throw new Error('Output was cut off. Return fewer, shorter items.');
+        const parsed=removeNullFields(JSON.parse(data.choices?.[0]?.message?.content||'{}'));
+        const output=input.feature==='translate_query'?z.object({query:z.string().min(1).max(1000)}).parse(parsed):validateOutput(parsed,input.evidence,input.feature);
+        return send(200,{...output,generationMs:performance.now()-started,usage:totalUsage,model,attempts:attempt+1});
+      } catch(error) {
+        if(attempt===1)return send(502,{error:'AI output failed structure or source checks after a retry. No result was saved. Try a smaller document section.'});
+        const feedback=error instanceof z.ZodError?error.issues.map(i=>`${i.path.join('.')}: ${i.message}`).join('; ').slice(0,1500):error instanceof SyntaxError?'Return complete valid JSON matching the requested schema.':error.message;
+        messages.push({role:'user',content:`The previous response failed validation: ${feedback}. Generate a fresh concise response matching the schema. Keep all citations within supplied evidence, quote exact text only, and respect every character limit. Do not repeat the invalid response.`});
+      }
+    } catch(error) {
+      if(['TimeoutError','AbortError'].includes(error.name))return send(504,{error:'AI generation timed out. Try again with a smaller section of the document.'});
+      return send(502,{error:'AI provider connection failed. Please retry.'});
+    }
+  }
 }
 export default handleStudy;

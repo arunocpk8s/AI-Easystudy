@@ -46,3 +46,19 @@ test('cloud quizzes reject descriptive questions and require exactly four option
  assert.throws(()=>validateOutput({items:[item]},evidence,'quiz'));
  assert.throws(()=>validateOutput({items:[{...item,options:['Repel','Attract','Disappear']}]},evidence,'quiz'));
 });
+
+test('structured generation retries invalid output and never bypasses citation checks',async()=>{
+ const oldKey=process.env.GROQ_API_KEY,oldToken=process.env.STUDY_ACCESS_TOKEN,oldModel=process.env.GROQ_MODEL;
+ try{
+ process.env.GROQ_API_KEY='test-not-real';process.env.STUDY_ACCESS_TOKEN='test-token';process.env.GROQ_MODEL='openai/gpt-oss-120b';
+ const req={method:'POST',headers:{'x-study-token':'test-token'},body:{feature:'notes',language:'English',evidence}};
+ let calls=0;const valid={items:[{title:'Charge',body:'Like charges repel.',sources:['S1'],keyPoints:[{text:'Like charges repel.',sources:['S1']}],definition:null}]};
+ const res=response();await handleStudy(req,res,async(url,options)=>{
+ const request=JSON.parse(options.body);assert.equal(request.response_format.type,'json_schema');assert.equal(request.response_format.json_schema.strict,true);assert.deepEqual(request.response_format.json_schema.schema.properties.items.items.properties.sources.items.enum,['S1']);
+ calls++;return {ok:true,json:async()=>({choices:[{finish_reason:'stop',message:{content:JSON.stringify(calls===1?{items:[{title:'Bad',body:'Bad',sources:['S99']}]}:valid)}}],usage:{prompt_tokens:10,completion_tokens:20,total_tokens:30}})};
+ });
+ assert.equal(calls,2);assert.equal(res.statusCode,200);assert.equal(res.data.attempts,2);assert.equal(res.data.usage.total_tokens,60);assert.equal(res.data.items[0].definition,undefined);
+ const bad=response();calls=0;await handleStudy(req,bad,async()=>{calls++;return {ok:true,json:async()=>({choices:[{message:{content:JSON.stringify({items:[{title:'Bad',body:'Bad',sources:['S99']}]})}}]})};});assert.equal(calls,2);assert.equal(bad.statusCode,502);assert.match(bad.data.error,/structure or source checks/);
+ const timeout=response();await handleStudy(req,timeout,async()=>{const e=new Error('timeout');e.name='TimeoutError';throw e;});assert.equal(timeout.statusCode,504);assert.match(timeout.data.error,/timed out/);
+ }finally{for(const [key,value] of Object.entries({GROQ_API_KEY:oldKey,STUDY_ACCESS_TOKEN:oldToken,GROQ_MODEL:oldModel})){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
+});
