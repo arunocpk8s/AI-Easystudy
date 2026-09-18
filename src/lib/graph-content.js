@@ -4,7 +4,7 @@ const boilerplate=/^(?:activity|exercise|figure|fig\.|table|example\s*\d|copyrig
 function graphSentences(chunk){
  let text=chunk.text;
  // A title can be an entire short paragraph: never remove it as a heading.
- if(!/[.!?]/.test(chunk.title)&&text.startsWith(chunk.title))text=text.slice(chunk.title.length);
+ if(!/[.!?]/.test(chunk.title)&&!/\b(is|are|describes|means|refers)\b/i.test(chunk.title)&&text.startsWith(chunk.title)&&/^[\r\n.]/.test(text.slice(chunk.title.length)))text=text.slice(chunk.title.length);
  const lines=text.trim().split('\n');
  while(lines.length>1&&lines[0].trim().length<90&&!/[.!?=]/.test(lines[0])&&!/\b(is|are|describes|means|refers)\b/i.test(lines[0]))lines.shift();
  return normalize(lines.join(' ')).split(/(?<=[.!?])\s+/).filter(text=>text.length>=10||/=/.test(text));

@@ -18,3 +18,8 @@ test('a short paragraph used as a page title is never discarded as a heading',()
  const text='Electric charge is conserved. Like charges repel. Unlike charges attract.';
  const items=sourceGraphMaterials([{id:'S1',page:1,title:text,text}],'mindmap');assert.equal(items.length,1);assert.ok(items[0].keyPoints.some(p=>p.text==='Like charges repel.'));
 });
+
+test('a topic title overlapping the first sentence never strips the scientific subject',()=>{
+ const text='Electric field is force per unit charge.';const [item]=sourceGraphMaterials([{id:'S1',page:1,title:'Electric field',text}],'mindmap');assert.equal(item.keyPoints[0].text,text);
+ const noStop='Electric field is force per unit charge';assert.equal(sourceGraphMaterials([{id:'S2',page:2,title:noStop,text:noStop}],'mindmap')[0].keyPoints[0].text,noStop);
+});
