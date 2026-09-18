@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {studyResponseFormat,removeNullFields} from './study-schema.js';
+import {studyResponseFormat,removeNullFields} from '../server/study-schema.js';
 import {timingSafeEqual} from 'node:crypto';
 const inputSchema=z.object({feature:z.enum(['ask','notes','mindmap','flashcards','summary','questions','confusions','quiz','revision','roadmap','translate_query']),language:z.enum(['English','Tamil','Hindi']),question:z.string().max(1000).optional(),classLevel:z.enum(['11','12','Other']).optional(),subject:z.string().max(100).optional(),evidence:z.array(z.object({id:z.string().regex(/^S\d+$/),page:z.number().int().positive(),title:z.string().max(200),text:z.string().min(1).max(12000)})).max(100)});
 const evidenceBlock=z.object({text:z.string().min(1).max(3000),sources:z.array(z.string()).min(1).max(20)});
