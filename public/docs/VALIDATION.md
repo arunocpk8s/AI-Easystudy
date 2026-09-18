@@ -139,3 +139,9 @@ Initial acceptance failures included outdated upload/button labels and cold PDF 
 
 
 The public Vercel deployment subsequently passed all 20 multi-format desktop/mobile checks, including actual compiled PNG OCR. Separate actual image OCR smoke tests passed PNG, JPG, JPEG, GIF, GIFF, BMP and WebP; recognized text, timings, browser errors and worker cleanup are recorded in `evaluation/results/image-formats-production.json`. These are clear original printed English fixtures. No live cloud generation, DOC conversion, animated GIF coverage or Office visual interpretation is claimed.
+
+## Animated RAG and MCP walkthrough — 18 September 2026
+
+All 33 unit tests and 20 relevant desktop/mobile browser checks passed, including six new flow checks. Tests cover playback advancement, pause stability, manual selection/next/restart, switching between document/question/material/development paths, whole-document coverage labels, actual source-mode and retrieved-evidence labels, mobile width, and reduced-motion effects. Playback made no study API calls. Unit checks verify optional OCR/vector/cloud states and that MCP is accurately described as a development integration rather than an upload/question runtime tool. The production build passed. Small English fixture retrieval remains 8/8 answerable hits at top one/three.
+
+Screenshots: `artifacts/animated-rag-desktop.png`, `animated-mcp-desktop.png`, and `animated-rag-mobile.png`. Educational playback speed is explicitly separate from measured processing latency; the walkthrough does not run external MCP/model tools. Existing cloud browser checks mock the provider and do not establish live LLM quality. No new retrieval, OCR or translation algorithm was introduced in this release.

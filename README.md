@@ -117,3 +117,12 @@ Real OCR checks: `node scripts/smoke-ocr.js English` (also Tamil/Hindi) against 
 | DOC | Conversion instruction | Save as DOCX or PDF. Server conversion is not enabled. |
 
 All supported readers run locally with a 20 MB file limit. New non-PDF readers also cap extracted text at 2 million characters. Office archives have a 40 MB expanded-size cap and 10 MB per entry. Source modal downloads the original Office/text file and shows original images; it does not embed Office files as PDFs. OCR downloads public models but does not upload image contents. AI mode remains an optional, separately configured cloud path.
+
+
+## Animated system walkthrough
+
+Open **Behind the RAG** to explore four selectable flows: document preparation, question answering, study-material creation, and MCP/development. Play/pause, playback speed, manual next-step and step selection control the illustration. Playback starts paused and reduced-motion preferences disable moving effects. Each step exposes its purpose, tool, input, output, validation and limitations; source passages and active session/vector/cloud status come from actual application state. Playback never invokes OCR, model inference, MCP or deployment. Timing cards and request traces remain measured values; illustration speed is not job latency.
+
+`RagWalkthrough.jsx` owns only presentation state (path, selected step, play state, speed). `flow-model.js` derives educational step contracts from the document, vectors, request trace, selected mode and cloud configuration. Timers are cleared on pause/path changes/unmount; the walkthrough exposes keyboard buttons, current-step markers and a progressbar. CSS packets and highlights indicate the sequence, with a vertical flow on narrower screens.
+
+The MCP path explains coding-agent tool requests, GitHub integration/repository reads, structured results and release verification. The review Skill is an instruction workflow; application libraries run directly in the browser. Git and Vercel CLIs commit/push/deploy outside student question answering. Optional Groq/E5/NLLB paths, memory-only indexing and future Qdrant/reranking are explicitly labelled.

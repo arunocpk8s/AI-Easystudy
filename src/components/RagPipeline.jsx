@@ -1,7 +1,8 @@
 import React from 'react';
+import RagWalkthrough from './RagWalkthrough.jsx';
 import {ArrowRight,CheckCircle2,Clock3,Info} from 'lucide-react';
 const format=ms=>ms==null?'Not measured':ms<1000?`${Math.round(ms)} ms`:`${(ms/1000).toFixed(2)} sec`;
-export default function RagPipeline({doc,vectors,trace,busy,progress}){
+export default function RagPipeline({doc,vectors,trace,busy,progress,mode,aiConfigured,studyTool}){
   const timings=doc?.processing||{};
   const generated=trace?.stages.find(s=>/Generate/.test(s.name));
   const embedded=trace?.kind==='Semantic indexing'?trace.stages[0]:null;
@@ -17,6 +18,7 @@ export default function RagPipeline({doc,vectors,trace,busy,progress}){
   ];
   return <section className="rag-reference" aria-label="RAG processing pipeline">
     <div className="pipeline-heading"><div><h1>Behind the RAG</h1><p>Follow your document from upload to source-linked study material.</p></div><span className="measurement-label"><Clock3 size={14}/>Measured, not estimated</span></div>
+    <RagWalkthrough doc={doc} vectors={vectors} trace={trace} mode={mode} aiConfigured={aiConfigured} studyTool={studyTool}/>
     <div className="pipeline-grid">{stages.map((stage,i)=><article key={stage.title} className={`pipeline-card ${stage.unavailable?'stage-unavailable':''}`}>
       <span className="pipeline-order">STEP {String(i+1).padStart(2,'0')}</span><h2>{i+1}. {stage.title}</h2><p>{stage.description}</p>
       <div className="stage-timing"><span className={`stage-meter ${stage.ms!=null?'measured':''}`}><i/></span><strong>{stage.ms!=null?format(stage.ms):stage.unavailable?'Unavailable':'—'}</strong></div>
